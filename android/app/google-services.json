@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1089130885115",
+    "project_id": "caffchat-flutter",
+    "storage_bucket": "caffchat-flutter.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1089130885115:android:89f61b58b24e0a6be5e55e",
+        "android_client_info": {
+          "package_name": "com.example.caffchat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAl7obuOxGTHLi4jS6IDYwiYYWwpmTG-p0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
