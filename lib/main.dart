@@ -4,7 +4,10 @@ import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions
+        .currentPlatform,
+  );
 
   runApp(CaffChat());
 }
@@ -13,12 +16,27 @@ class CaffChat extends StatefulWidget {
   const CaffChat({super.key});
 
   @override
-  State<CaffChat> createState() => _CaffChatState();
+  State<CaffChat> createState() =>
+      _CaffChatState();
 }
 
-class _CaffChatState extends State<CaffChat> {
+class _CaffChatState
+    extends State<CaffChat> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return MaterialApp(
+      theme: ThemeData(
+        brightness: Brightness.light,
+        useMaterial3: true,
+        fontFamily: "Poppins",
+      ),
+      home: Scaffold(
+        body: Center(
+          child: Text(
+            'Welcome to CaffChat',
+          ),
+        ),
+      ),
+    );
   }
 }
