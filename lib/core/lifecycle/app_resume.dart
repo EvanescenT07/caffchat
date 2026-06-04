@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'app_resume.g.dart';
 
 // Manage app resume logic with 5s throttle protection
-@riverpod
+@Riverpod(keepAlive: true)
 class AppResume extends _$AppResume {
   DateTime? _lastValidationTime;
   static const Duration
@@ -28,13 +28,16 @@ class AppResume extends _$AppResume {
       );
       return;
     }
+
+    _lastValidationTime = now;
+    await _validateUserSession();
   }
 
   Future<void>
   _validateUserSession() async {
     // TODO: Wire to session verification use case
     AppLogger.info(
-      'Sesion Validation Triggered on Resume',
+      'Session Validation Triggered on Resume',
     );
   }
 }

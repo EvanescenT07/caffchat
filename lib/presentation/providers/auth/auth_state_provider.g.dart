@@ -1,25 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'app_resume.dart';
+part of 'auth_state_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$appResumeHash() => r'27be2c50026e95ef343a8f7d124d73018cbefbdc';
+String _$authStateHash() => r'31ec7faeb3da4baf99e68060e12367a1afc796ef';
 
-/// See also [AppResume].
-@ProviderFor(AppResume)
-final appResumeProvider = NotifierProvider<AppResume, void>.internal(
-  AppResume.new,
-  name: r'appResumeProvider',
+/// See also [AuthState].
+@ProviderFor(AuthState)
+final authStateProvider = AutoDisposeNotifierProvider<AuthState, bool>.internal(
+  AuthState.new,
+  name: r'authStateProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$appResumeHash,
+      : _$authStateHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$AppResume = Notifier<void>;
+typedef _$AuthState = AutoDisposeNotifier<bool>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

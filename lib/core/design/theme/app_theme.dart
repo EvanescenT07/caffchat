@@ -22,10 +22,12 @@ class AppTheme {
           .onPrimaryContainer,
       elevation: 0,
       centerTitle: true,
-      titleTextStyle: const TextStyle(
+      titleTextStyle: TextStyle(
         fontFamily: 'Poppins',
         fontSize: 18,
         fontWeight: FontWeight.w600,
+        color: lightColorScheme
+            .onPrimaryContainer,
         inherit: false,
       ),
     ),
@@ -90,10 +92,12 @@ class AppTheme {
           .onPrimaryContainer,
       elevation: 0,
       centerTitle: true,
-      titleTextStyle: const TextStyle(
+      titleTextStyle: TextStyle(
         fontFamily: 'Poppins',
         fontSize: 18,
         fontWeight: FontWeight.w600,
+        color: darkColorScheme
+            .onPrimaryContainer,
         inherit: false,
       ),
     ),

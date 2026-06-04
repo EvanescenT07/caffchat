@@ -6,9 +6,9 @@ import 'package:caffchat/presentation/providers/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class CaffApp
+class CaffChat
     extends HookConsumerWidget {
-  const CaffApp({super.key});
+  const CaffChat({super.key});
 
   @override
   Widget build(

@@ -3,9 +3,9 @@ import 'package:caffchat/core/config/app_config.dart';
 
 Future<void> main() async {
   AppConfig.init(
-    env: Environment.prod,
-    enableChucker: false,
-    enableDebugLogging: false,
+    env: Environment.dev,
+    enableChucker: true,
+    enableDebugLogging: true,
   );
 
   await bootstrap();

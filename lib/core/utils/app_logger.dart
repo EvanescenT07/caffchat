@@ -1,3 +1,4 @@
+import 'package:caffchat/core/config/app_config.dart';
 import 'package:logger/logger.dart';
 
 class AppLogger {
@@ -15,12 +16,30 @@ class AppLogger {
 
   AppLogger._();
 
-  static void debug(String message) =>
+  static void debug(String message) {
+    if (AppConfig
+        .instance
+        .enableDebugLogging) {
       _logger.d(message);
-  static void info(String message) =>
+    }
+  }
+
+  static void info(String message) {
+    if (AppConfig
+        .instance
+        .enableDebugLogging) {
       _logger.i(message);
-  static void warning(String message) =>
+    }
+  }
+
+  static void warning(String message) {
+    if (AppConfig
+        .instance
+        .enableDebugLogging) {
       _logger.w(message);
+    }
+  }
+
   static void error(
     String message, {
     Object? error,

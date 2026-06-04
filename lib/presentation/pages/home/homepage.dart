@@ -1,3 +1,4 @@
+import 'package:caffchat/core/design/caff_text.dart';
 import 'package:flutter/material.dart';
 
 class Homepage extends StatelessWidget {
@@ -5,6 +6,10 @@ class Homepage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Center(
+        child: CaffText(text: 'Home'),
+      ),
+    );
   }
 }

@@ -32,6 +32,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   dio: ^5.9.2
   equatable: ^2.0.8
+  firebase_auth: ^6.5.2
   firebase_core: ^4.9.0
   flutter:
     sdk: flutter
@@ -81,7 +82,7 @@ flutter:
   - family: Poppins
     fonts:
     - asset: assets/fonts/Poppins-Light.ttf
-      weight: 200
+      weight: 300
     - asset: assets/fonts/Poppins.ttf
       weight: 400
     - asset: assets/fonts/Poppins-Medium.ttf
