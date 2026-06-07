@@ -1,18 +1,23 @@
+import 'package:caffchat/domain/entitites/auth/auth_user.dart';
 import 'package:caffchat/domain/entitites/result/result.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class AuthRepository {
-  Stream<User?> get authStateChanges;
-  User? get currentUser;
+  Stream<AuthUser?>
+  get authStateChanges;
+  AuthUser? get currentUser;
+
+  // Validate the current user session
+  Future<bool> validateSession();
 
   // Sign in with email and password
-  Future<Result<User>> signInWithEmail({
+  Future<Result<AuthUser>>
+  signInWithEmail({
     required String email,
     required String password,
   });
 
   // Register a new account
-  Future<Result<User>>
+  Future<Result<AuthUser>>
   registerWithEmail({
     required String email,
     required String password,

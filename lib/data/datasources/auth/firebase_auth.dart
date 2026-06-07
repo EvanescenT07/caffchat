@@ -1,4 +1,5 @@
 import 'package:caffchat/core/utils/app_logger.dart';
+import 'package:caffchat/domain/entitites/auth/auth_user.dart';
 import 'package:caffchat/domain/entitites/result/result.dart';
 import 'package:caffchat/domain/repositories/auth/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,16 +14,62 @@ class FirebaseAuthDataSource
            firebaseAuth ??
            FirebaseAuth.instance;
 
-  @override
-  Stream<User?> get authStateChanges =>
-      _firebaseAuth.authStateChanges();
+  // Maps Firebase User to domain AuthUser entity
+  AuthUser _mapToAuthUser(User user) {
+    return AuthUser(
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName,
+      isEmailVerified:
+          user.emailVerified,
+    );
+  }
 
   @override
-  User? get currentUser =>
-      _firebaseAuth.currentUser;
+  Future<bool> validateSession() async {
+    final user =
+        _firebaseAuth.currentUser;
+    if (user == null) return false;
+
+    try {
+      await user.reload();
+      return _firebaseAuth
+              .currentUser !=
+          null;
+    } on FirebaseAuthException catch (
+      e
+    ) {
+      AppLogger.error(
+        'Session validate failed',
+        error: e,
+      );
+      await _firebaseAuth.signOut();
+      return false;
+    }
+  }
 
   @override
-  Future<Result<User>> signInWithEmail({
+  Stream<AuthUser?>
+  get authStateChanges => _firebaseAuth
+      .authStateChanges()
+      .map(
+        (user) => user != null
+            ? _mapToAuthUser(user)
+            : null,
+      );
+
+  @override
+  AuthUser? get currentUser {
+    final user =
+        _firebaseAuth.currentUser;
+    return user != null
+        ? _mapToAuthUser(user)
+        : null;
+  }
+
+  @override
+  Future<Result<AuthUser>>
+  signInWithEmail({
     required String email,
     required String password,
   }) async {
@@ -37,10 +84,12 @@ class FirebaseAuthDataSource
       final user = credential.user;
       if (user == null) {
         return Result.failed(
-          'Sign-in succeed but user is null',
+          'Sign-in succeeded but user is null',
         );
       }
-      return Result.success(user);
+      return Result.success(
+        _mapToAuthUser(user),
+      );
     } on FirebaseAuthException catch (
       e
     ) {
@@ -55,7 +104,7 @@ class FirebaseAuthDataSource
   }
 
   @override
-  Future<Result<User>>
+  Future<Result<AuthUser>>
   registerWithEmail({
     required String email,
     required String password,
@@ -71,7 +120,7 @@ class FirebaseAuthDataSource
       final user = credential.user;
       if (user == null) {
         return Result.failed(
-          'Register succeed but user is null',
+          'Register succeeded but user is null',
         );
       }
 
@@ -85,9 +134,11 @@ class FirebaseAuthDataSource
         await user.reload();
       }
 
+      final updatedUser =
+          _firebaseAuth.currentUser ??
+          user;
       return Result.success(
-        _firebaseAuth.currentUser ??
-            user,
+        _mapToAuthUser(updatedUser),
       );
     } on FirebaseAuthException catch (
       e
@@ -144,7 +195,7 @@ class FirebaseAuthDataSource
     }
   }
 
-  // Maps Firebase error code
+  // Maps Firebase error code to user-friendly message
   String _mapAuthErrorToMessage(
     String code,
   ) {

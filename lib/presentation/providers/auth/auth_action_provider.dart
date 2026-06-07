@@ -1,6 +1,6 @@
+import 'package:caffchat/domain/entitites/auth/auth_user.dart';
 import 'package:caffchat/domain/entitites/result/result.dart';
-import 'package:caffchat/presentation/providers/auth/auth_repository_provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:caffchat/presentation/providers/auth/auth_usecase_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auth_action_provider.g.dart';
@@ -11,15 +11,15 @@ class AuthAction extends _$AuthAction {
   AsyncValue<void> build() =>
       const AsyncData(null);
 
-  Future<Result<User>> register({
+  Future<Result<AuthUser>> register({
     required String email,
     required String password,
     String? displayName,
   }) async {
     state = const AsyncLoading();
     final result = await ref
-        .read(authRepositoryProvider)
-        .registerWithEmail(
+        .read(registerUseCaseProvider)
+        .call(
           email: email,
           password: password,
           displayName: displayName,
@@ -42,14 +42,14 @@ class AuthAction extends _$AuthAction {
     return result;
   }
 
-  Future<Result<User>> signIn({
+  Future<Result<AuthUser>> signIn({
     required String email,
     required String password,
   }) async {
     state = const AsyncLoading();
     final result = await ref
-        .read(authRepositoryProvider)
-        .signInWithEmail(
+        .read(signInUseCaseProvider)
+        .call(
           email: email,
           password: password,
         );
@@ -74,8 +74,8 @@ class AuthAction extends _$AuthAction {
   Future<void> signOut() async {
     state = const AsyncLoading();
     final result = await ref
-        .read(authRepositoryProvider)
-        .signOut();
+        .read(signOutUseCaseProvider)
+        .call();
 
     switch (result) {
       case Success():
@@ -98,10 +98,10 @@ class AuthAction extends _$AuthAction {
   }) async {
     state = const AsyncLoading();
     final result = await ref
-        .read(authRepositoryProvider)
-        .sendPasswordResetEmail(
-          email: email,
-        );
+        .read(
+          forgotPasswordUseCaseProvider,
+        )
+        .call(email: email);
     switch (result) {
       case Success():
         state = const AsyncData(null);

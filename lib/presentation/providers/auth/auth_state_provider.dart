@@ -1,24 +1,24 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:caffchat/presentation/providers/auth/auth_repository_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auth_state_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class AuthState extends _$AuthState {
   @override
   bool build() {
-    final subscription = FirebaseAuth
-        .instance
-        .authStateChanges()
-        .listen((user) {
-          state = user != null;
-        });
+    final repository =
+        ref.watch(authRepositoryProvider);
+
+    final subscription =
+        repository.authStateChanges.listen(
+      (user) {
+        state = user != null;
+      },
+    );
 
     ref.onDispose(subscription.cancel);
 
-    return FirebaseAuth
-            .instance
-            .currentUser !=
-        null;
+    return repository.currentUser != null;
   }
 }

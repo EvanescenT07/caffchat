@@ -312,8 +312,9 @@ void _handleLogin(
 ) async {
   if (!(formKey.currentState
           ?.validate() ??
-      false))
+      false)) {
     return;
+  }
   final result = await ref
       .read(authActionProvider.notifier)
       .signIn(

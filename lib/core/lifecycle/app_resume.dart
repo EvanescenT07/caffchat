@@ -1,4 +1,7 @@
+import 'package:caffchat/core/router/app_route_name.dart';
+import 'package:caffchat/core/router/app_router.dart';
 import 'package:caffchat/core/utils/app_logger.dart';
+import 'package:caffchat/presentation/providers/auth/auth_repository_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_resume.g.dart';
@@ -35,9 +38,23 @@ class AppResume extends _$AppResume {
 
   Future<void>
   _validateUserSession() async {
-    // TODO: Wire to session verification use case
     AppLogger.info(
       'Session Validation Triggered on Resume',
     );
+
+    final repository = ref.read(
+      authRepositoryProvider,
+    );
+    final isValid = await repository
+        .validateSession();
+
+    if (!isValid) {
+      AppLogger.warning(
+        'Session invalid on resume — redirecting to login',
+      );
+      AppRouter.router.go(
+        RouteName.login,
+      );
+    }
   }
 }

@@ -6,7 +6,7 @@ part of 'auth_action_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$authActionHash() => r'8b5b9d3ae4adc370009f6a96ab1a9209f87951c6';
+String _$authActionHash() => r'e5c3e05b84076fbafdde6ae6e001b4903c229991';
 
 /// See also [AuthAction].
 @ProviderFor(AuthAction)

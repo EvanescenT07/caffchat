@@ -5,6 +5,7 @@ import 'package:caffchat/presentation/pages/auth/register.dart';
 import 'package:caffchat/presentation/pages/home/homepage.dart';
 import 'package:caffchat/presentation/pages/screens/splash_screen.dart';
 import 'package:chucker_flutter/chucker_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRouter {
@@ -20,15 +21,12 @@ class AppRouter {
     required bool isAuthenticated,
   }) {
     _splashCompleted = true;
-    _isAuthenticated = isAuthenticated;
     _router?.go(
       isAuthenticated
           ? RouteName.home
           : RouteName.login,
     );
   }
-
-  static bool _isAuthenticated = false;
 
   static GoRouter get router {
     return _router ??= GoRouter(
@@ -54,9 +52,12 @@ class AppRouter {
         }
 
         // After splash, never go back to splash
-        if (_splashCompleted &&
+         if (_splashCompleted &&
             isSplash) {
-          return _isAuthenticated
+          final isLoggedIn =
+              FirebaseAuth.instance.currentUser !=
+                  null;
+          return isLoggedIn
               ? RouteName.home
               : RouteName.login;
         }
