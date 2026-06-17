@@ -39,6 +39,7 @@ class AuthAction extends _$AuthAction {
   Future<Result<AuthUser>> register({
     required String email,
     required String password,
+    required String phoneNumber,
     String? displayName,
   }) async {
     state = const AsyncLoading();
@@ -60,6 +61,7 @@ class AuthAction extends _$AuthAction {
             authUser.displayName ??
             displayName ??
             '',
+        phoneNumber: phoneNumber,
         createdAt: DateTime.now(),
       );
       try {

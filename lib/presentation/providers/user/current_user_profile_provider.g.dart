@@ -7,7 +7,7 @@ part of 'current_user_profile_provider.dart';
 // **************************************************************************
 
 String _$currentUserProfileHash() =>
-    r'73c74c90ee56206b70fbc9bda00902eaab5373d3';
+    r'a666394748d1f21a33b05bce6a6a21f9d752c506';
 
 /// See also [currentUserProfile].
 @ProviderFor(currentUserProfile)

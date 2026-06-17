@@ -43,8 +43,7 @@ class UserProfileModel {
           data['photoUrl'] as String?,
       bio: data['bio'] as String?,
       phoneNumber:
-          data['phoneNumber']
-              as String?,
+          data['phoneNumber'] as String,
       isOnline:
           data['isOnline'] as bool? ??
           false,

@@ -14,7 +14,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class RegisterPage extends HookConsumerWidget {
+class RegisterPage
+    extends HookConsumerWidget {
   const RegisterPage({super.key});
 
   @override
@@ -22,7 +23,6 @@ class RegisterPage extends HookConsumerWidget {
     BuildContext context,
     WidgetRef ref,
   ) {
-
     final formKey = useMemoized(
       GlobalKey<FormState>.new,
     );
@@ -30,17 +30,23 @@ class RegisterPage extends HookConsumerWidget {
         useTextEditingController();
     final emailController =
         useTextEditingController();
+    final phoneNumberController =
+        useTextEditingController();
     final passwordController =
         useTextEditingController();
     final confirmPasswordController =
         useTextEditingController();
-    final passwordVisible = useState(false);
+
+    final passwordVisible = useState(
+      false,
+    );
     final confirmPasswordVisible =
         useState(false);
     final authState = ref.watch(
       authActionProvider,
     );
-    final isLoading = authState is AsyncLoading;
+    final isLoading =
+        authState is AsyncLoading;
 
     // Listen for auth errors and show snackbar
     ref.listen(authActionProvider, (
@@ -48,12 +54,15 @@ class RegisterPage extends HookConsumerWidget {
       next,
     ) {
       if (next is AsyncError) {
-        ScaffoldMessenger.of(context).showSnackBar(
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(
           SnackBar(
             content: Text(
               next.error.toString(),
             ),
-            backgroundColor: context.colors.error,
+            backgroundColor:
+                context.colors.error,
           ),
         );
       }
@@ -62,30 +71,38 @@ class RegisterPage extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () => context.pop(),
+          onPressed: () =>
+              context.pop(),
           icon: Icon(
             Icons.arrow_back,
-            color: context.colors.onPrimaryContainer,
+            color: context
+                .colors
+                .onPrimaryContainer,
           ),
         ),
         title: CaffText(
           text: 'Create Account',
           size: CaffFontSize.titleLg,
           weight: CaffFontWeight.bold,
-          color: context.colors.onPrimaryContainer,
+          color: context
+              .colors
+              .onPrimaryContainer,
         ),
         centerTitle: true,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(
-            horizontal: CaffSpacing.lg,
-          ),
+          padding:
+              const EdgeInsets.symmetric(
+                horizontal:
+                    CaffSpacing.lg,
+              ),
           child: Form(
             key: formKey,
             child: Column(
               crossAxisAlignment:
-                  CrossAxisAlignment.start,
+                  CrossAxisAlignment
+                      .start,
               children: [
                 const SizedBox(
                   height: CaffRadius.md,
@@ -96,15 +113,19 @@ class RegisterPage extends HookConsumerWidget {
                   child: CaffText(
                     text:
                         'Please provide yourname and an\noptional profile photo',
-                    size: CaffFontSize.bodyMd,
-                    color:
-                        context.colors.onSurfaceVariant,
-                    align: TextAlign.center,
+                    size: CaffFontSize
+                        .bodyMd,
+                    color: context
+                        .colors
+                        .onSurfaceVariant,
+                    align: TextAlign
+                        .center,
                   ),
                 ),
 
                 const SizedBox(
-                  height: CaffSpacing.lg,
+                  height:
+                      CaffSpacing.lg,
                 ),
 
                 // Profile avatar placeholder
@@ -119,8 +140,10 @@ class RegisterPage extends HookConsumerWidget {
                           content: Text(
                             'Feature not ready yet',
                           ),
-                          backgroundColor: context.colors
-                              .onSecondaryContainer,
+                          backgroundColor:
+                              context
+                                  .colors
+                                  .onSecondaryContainer,
                         ),
                       );
                     },
@@ -128,12 +151,16 @@ class RegisterPage extends HookConsumerWidget {
                       children: [
                         CircleAvatar(
                           radius: 56,
-                          backgroundColor: context.colors
-                              .surfaceContainerHigh,
+                          backgroundColor:
+                              context
+                                  .colors
+                                  .surfaceContainerHigh,
                           child: Icon(
-                            Icons.person_outline,
+                            Icons
+                                .person_outline,
                             size: 56,
-                            color: context.colors
+                            color: context
+                                .colors
                                 .onSurfaceVariant,
                           ),
                         ),
@@ -143,22 +170,25 @@ class RegisterPage extends HookConsumerWidget {
                           child: Container(
                             width: 32,
                             height: 32,
-                            decoration:
-                                BoxDecoration(
-                              color: context.colors
+                            decoration: BoxDecoration(
+                              color: context
+                                  .colors
                                   .primaryContainer,
-                              shape:
-                                  BoxShape.circle,
+                              shape: BoxShape
+                                  .circle,
                               border: Border.all(
-                                color:
-                                    context.colors.surface,
-                                width: 1,
+                                color: context
+                                    .colors
+                                    .surface,
+                                width:
+                                    1,
                               ),
                             ),
                             child: Icon(
                               Icons.add,
                               size: 18,
-                              color: context.colors
+                              color: context
+                                  .colors
                                   .onPrimaryContainer,
                             ),
                           ),
@@ -169,36 +199,48 @@ class RegisterPage extends HookConsumerWidget {
                 ),
 
                 const SizedBox(
-                  height: CaffSpacing.xl,
+                  height:
+                      CaffSpacing.xl,
                 ),
 
                 // Display name label
                 CaffText(
                   text: 'Display Name',
-                  size: CaffFontSize.bodyMd,
-                  weight: CaffFontWeight.medium,
+                  size: CaffFontSize
+                      .bodyMd,
+                  weight: CaffFontWeight
+                      .medium,
                 ),
 
                 const SizedBox(
-                  height: CaffSpacing.sm,
+                  height:
+                      CaffSpacing.sm,
                 ),
 
                 // Display name field
                 CaffTextField(
                   controller:
                       displayNameController,
-                  hintText: 'Enter your name',
+                  hintText:
+                      'Enter your name',
                   keyboardType:
-                      TextInputType.name,
+                      TextInputType
+                          .name,
                   textInputAction:
-                      TextInputAction.next,
+                      TextInputAction
+                          .next,
                   enabled: !isLoading,
                   validator: (value) {
                     if (value == null ||
-                        value.trim().isEmpty) {
+                        value
+                            .trim()
+                            .isEmpty) {
                       return 'Display name is required';
                     }
-                    if (value.trim().length < 3) {
+                    if (value
+                            .trim()
+                            .length <
+                        3) {
                       return 'Name must be at least 3 characters';
                     }
                     return null;
@@ -206,74 +248,142 @@ class RegisterPage extends HookConsumerWidget {
                 ),
 
                 const SizedBox(
-                  height: CaffSpacing.md,
+                  height:
+                      CaffSpacing.md,
                 ),
 
                 // Email Address label
                 CaffText(
                   text: 'Email Address',
-                  size: CaffFontSize.bodyMd,
-                  weight: CaffFontWeight.medium,
+                  size: CaffFontSize
+                      .bodyMd,
+                  weight: CaffFontWeight
+                      .medium,
                 ),
                 const SizedBox(
-                  height: CaffSpacing.sm,
+                  height:
+                      CaffSpacing.sm,
                 ),
                 // Email field
                 CaffTextField(
-                  controller: emailController,
-                  hintText: 'example@email.com',
+                  controller:
+                      emailController,
+                  hintText:
+                      'example@email.com',
                   keyboardType:
-                      TextInputType.emailAddress,
+                      TextInputType
+                          .emailAddress,
                   textInputAction:
-                      TextInputAction.next,
+                      TextInputAction
+                          .next,
                   enabled: !isLoading,
                   validator: (value) {
                     if (value == null ||
-                        value.trim().isEmpty) {
+                        value
+                            .trim()
+                            .isEmpty) {
                       return 'Email is required';
                     }
                     if (!RegExp(
                       r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-                    ).hasMatch(value.trim())) {
+                    ).hasMatch(
+                      value.trim(),
+                    )) {
                       return 'Enter a valid email address';
                     }
                     return null;
                   },
                 ),
                 const SizedBox(
-                  height: CaffSpacing.md,
+                  height:
+                      CaffSpacing.md,
+                ),
+                // Phone Number label
+                CaffText(
+                  text:
+                      'Phone Number (Optional)',
+                  size: CaffFontSize
+                      .bodyMd,
+                  weight: CaffFontWeight
+                      .medium,
+                ),
+                const SizedBox(
+                  height:
+                      CaffSpacing.sm,
+                ),
+                // Phone Number field
+                CaffTextField(
+                  controller:
+                      phoneNumberController,
+                  hintText:
+                      '+62 812 3456 7890',
+                  keyboardType:
+                      TextInputType
+                          .phone,
+                  textInputAction:
+                      TextInputAction
+                          .next,
+                  enabled: !isLoading,
+                  validator: (value) {
+                    if (value != null &&
+                        value
+                            .trim()
+                            .isNotEmpty) {
+                      if (!RegExp(
+                        r'^\+?[0-9\s\-]{7,15}$',
+                      ).hasMatch(
+                        value.trim(),
+                      )) {
+                        return 'Enter a valid phone number';
+                      }
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height:
+                      CaffSpacing.md,
                 ),
                 // Password label
                 CaffText(
                   text: 'Password',
-                  size: CaffFontSize.bodyMd,
-                  weight: CaffFontWeight.medium,
+                  size: CaffFontSize
+                      .bodyMd,
+                  weight: CaffFontWeight
+                      .medium,
                 ),
                 const SizedBox(
-                  height: CaffSpacing.sm,
+                  height:
+                      CaffSpacing.sm,
                 ),
                 // Password field
                 CaffTextField(
-                  controller: passwordController,
+                  controller:
+                      passwordController,
                   hintText:
                       'Enter your password',
                   obscureText:
-                      !passwordVisible.value,
+                      !passwordVisible
+                          .value,
                   textInputAction:
-                      TextInputAction.next,
+                      TextInputAction
+                          .next,
                   enabled: !isLoading,
                   suffixIcon: IconButton(
                     icon: Icon(
-                      passwordVisible.value
+                      passwordVisible
+                              .value
                           ? Icons
                                 .visibility_off_outlined
                           : Icons
                                 .visibility_outlined,
-                      color: context.colors
+                      color: context
+                          .colors
                           .onSurfaceVariant,
                     ),
                     onPressed: () =>
-                        passwordVisible.value =
+                        passwordVisible
+                                .value =
                             !passwordVisible
                                 .value,
                   ),
@@ -282,23 +392,29 @@ class RegisterPage extends HookConsumerWidget {
                         value.isEmpty) {
                       return 'Password is required';
                     }
-                    if (value.length < 6) {
+                    if (value.length <
+                        6) {
                       return 'Password must be at least 6 characters';
                     }
                     return null;
                   },
                 ),
                 const SizedBox(
-                  height: CaffSpacing.md,
+                  height:
+                      CaffSpacing.md,
                 ),
                 // Confirm Password label
                 CaffText(
-                  text: 'Confirm Password',
-                  size: CaffFontSize.bodyMd,
-                  weight: CaffFontWeight.medium,
+                  text:
+                      'Confirm Password',
+                  size: CaffFontSize
+                      .bodyMd,
+                  weight: CaffFontWeight
+                      .medium,
                 ),
                 const SizedBox(
-                  height: CaffSpacing.sm,
+                  height:
+                      CaffSpacing.sm,
                 ),
                 // Confirm Password field
                 CaffTextField(
@@ -310,7 +426,8 @@ class RegisterPage extends HookConsumerWidget {
                       !confirmPasswordVisible
                           .value,
                   textInputAction:
-                      TextInputAction.done,
+                      TextInputAction
+                          .done,
                   enabled: !isLoading,
                   suffixIcon: IconButton(
                     icon: Icon(
@@ -320,7 +437,8 @@ class RegisterPage extends HookConsumerWidget {
                                 .visibility_off_outlined
                           : Icons
                                 .visibility_outlined,
-                      color: context.colors
+                      color: context
+                          .colors
                           .onSurfaceVariant,
                     ),
                     onPressed: () =>
@@ -343,65 +461,77 @@ class RegisterPage extends HookConsumerWidget {
                   },
                   onFieldSubmitted: (_) =>
                       _handleRegister(
-                    context,
-                    ref,
-                    formKey,
-                    displayNameController,
-                    emailController,
-                    passwordController,
-                  ),
+                        context,
+                        ref,
+                        formKey,
+                        displayNameController,
+                        emailController,
+                        passwordController,
+                        phoneNumberController,
+                      ),
                 ),
                 const SizedBox(
-                  height: CaffSpacing.xl,
+                  height:
+                      CaffSpacing.xl,
                 ),
                 // Register button
                 CaffPrimaryButton(
-                  text: 'Create Account →',
+                  text:
+                      'Create Account →',
                   isLoading: isLoading,
-                  onPressed: () =>
-                      _handleRegister(
+                  onPressed: () => _handleRegister(
                     context,
                     ref,
                     formKey,
                     displayNameController,
                     emailController,
                     passwordController,
+                    phoneNumberController,
                   ),
                 ),
                 const SizedBox(
-                  height: CaffSpacing.lg,
+                  height:
+                      CaffSpacing.lg,
                 ),
                 // Navigate back to login
                 Center(
                   child: Row(
                     mainAxisAlignment:
-                        MainAxisAlignment.center,
+                        MainAxisAlignment
+                            .center,
                     children: [
                       CaffText(
                         text:
                             'Already have an account? ',
-                        size: CaffFontSize.bodyMd,
-                        color:
-                            context.colors.onSurfaceVariant,
+                        size:
+                            CaffFontSize
+                                .bodyMd,
+                        color: context
+                            .colors
+                            .onSurfaceVariant,
                       ),
                       GestureDetector(
                         onTap: isLoading
                             ? null
-                            : () => context.pop(),
+                            : () => context
+                                  .pop(),
                         child: CaffText(
                           text: 'Login',
-                          size:
-                              CaffFontSize.bodyMd,
+                          size: CaffFontSize
+                              .bodyMd,
                           weight: CaffFontWeight
                               .semiBold,
-                          color: context.colors.primary,
+                          color: context
+                              .colors
+                              .primary,
                         ),
                       ),
                     ],
                   ),
                 ),
                 const SizedBox(
-                  height: CaffSpacing.xl,
+                  height:
+                      CaffSpacing.xl,
                 ),
               ],
             ),
@@ -411,25 +541,41 @@ class RegisterPage extends HookConsumerWidget {
     );
   }
 
-  /// Validates the form and triggers registration through the auth provider.
+  // Validates the form and triggers registration through the auth provider.
   static void _handleRegister(
     BuildContext context,
     WidgetRef ref,
     GlobalKey<FormState> formKey,
-    TextEditingController displayNameController,
-    TextEditingController emailController,
-    TextEditingController passwordController,
+    TextEditingController
+    displayNameController,
+    TextEditingController
+    emailController,
+    TextEditingController
+    passwordController,
+    TextEditingController
+    phoneNumberController,
   ) async {
-    if (!(formKey.currentState?.validate() ?? false)) {
+    if (!(formKey.currentState
+            ?.validate() ??
+        false)) {
       return;
     }
+    final phoneNumber =
+        phoneNumberController.text
+            .trim();
     final result = await ref
-        .read(authActionProvider.notifier)
+        .read(
+          authActionProvider.notifier,
+        )
         .register(
-          email: emailController.text.trim(),
-          password: passwordController.text,
+          email: emailController.text
+              .trim(),
+          password:
+              passwordController.text,
           displayName:
-              displayNameController.text.trim(),
+              displayNameController.text
+                  .trim(),
+          phoneNumber: phoneNumber,
         );
     if (!context.mounted) return;
     if (result is Success) {
