@@ -1,7 +1,11 @@
-import 'package:caffchat/domain/entitites/auth/auth_user.dart';
-import 'package:caffchat/domain/entitites/result/result.dart';
+import 'package:caffchat/core/utils/app_logger.dart';
+import 'package:caffchat/domain/entities/auth/auth_user.dart';
+import 'package:caffchat/domain/entities/result/result.dart';
 import 'package:caffchat/presentation/providers/auth/auth_usecase_provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:caffchat/domain/entities/user/user_profile.dart';
+import 'package:caffchat/presentation/providers/user/user_profile_repository_provider.dart';
 
 part 'auth_action_provider.g.dart';
 
@@ -10,6 +14,27 @@ class AuthAction extends _$AuthAction {
   @override
   AsyncValue<void> build() =>
       const AsyncData(null);
+
+  /// Maps a [Result] to the corresponding [AsyncValue] state.
+  ///
+  /// Centralizes the result-to-state mapping to avoid
+  /// duplicating the switch block across every action method.
+  void _handleResult(Result result) {
+    switch (result) {
+      case Success():
+        state = const AsyncData(null);
+      case Failed(:final message):
+        state = AsyncError(
+          message,
+          StackTrace.current,
+        );
+      case Cancel(:final message):
+        state = AsyncError(
+          message,
+          StackTrace.current,
+        );
+    }
+  }
 
   Future<Result<AuthUser>> register({
     required String email,
@@ -24,20 +49,31 @@ class AuthAction extends _$AuthAction {
           password: password,
           displayName: displayName,
         );
-
-    switch (result) {
-      case Success():
-        state = const AsyncData(null);
-      case Failed(:final message):
-        state = AsyncError(
-          message,
-          StackTrace.current,
+    _handleResult(result);
+    // Sync to Firestore on successful registration
+    if (result is Success<AuthUser>) {
+      final authUser = result.value;
+      final profile = UserProfile(
+        uid: authUser.uid,
+        email: authUser.email ?? email,
+        displayName:
+            authUser.displayName ??
+            displayName ??
+            '',
+        createdAt: DateTime.now(),
+      );
+      try {
+        await ref
+            .read(
+              userProfileRepositoryProvider,
+            )
+            .upsertProfile(profile);
+      } on FirebaseException catch (e) {
+        AppLogger.error(
+          'Profile sync failed after registration',
+          error: e,
         );
-      case Cancel(:final message):
-        state = AsyncError(
-          message,
-          StackTrace.current,
-        );
+      }
     }
     return result;
   }
@@ -53,21 +89,45 @@ class AuthAction extends _$AuthAction {
           email: email,
           password: password,
         );
+    _handleResult(result);
 
-    switch (result) {
-      case Success():
-        state = const AsyncData(null);
-      case Failed(:final message):
-        state = AsyncError(
-          message,
-          StackTrace.current,
+    // Ensure Firestore profile exists (handles pre-migration users)
+    if (result is Success<AuthUser>) {
+      final authUser = result.value;
+      final profileRepo = ref.read(
+        userProfileRepositoryProvider,
+      );
+      final existingProfile =
+          await profileRepo.getProfile(
+            authUser.uid,
+          );
+      if (existingProfile.isFailed) {
+        final profile = UserProfile(
+          uid: authUser.uid,
+          email:
+              authUser.email ?? email,
+          displayName:
+              authUser.displayName ??
+              '',
+          createdAt: DateTime.now(),
         );
-      case Cancel(:final message):
-        state = AsyncError(
-          message,
-          StackTrace.current,
-        );
+        try {
+          await ref
+              .read(
+                userProfileRepositoryProvider,
+              )
+              .upsertProfile(profile);
+        } on FirebaseException catch (
+          e
+        ) {
+          AppLogger.error(
+            'Profile sync failed after signin',
+            error: e,
+          );
+        }
+      }
     }
+
     return result;
   }
 
@@ -76,21 +136,7 @@ class AuthAction extends _$AuthAction {
     final result = await ref
         .read(signOutUseCaseProvider)
         .call();
-
-    switch (result) {
-      case Success():
-        state = const AsyncData(null);
-      case Failed(:final message):
-        state = AsyncError(
-          message,
-          StackTrace.current,
-        );
-      case Cancel(:final message):
-        state = AsyncError(
-          message,
-          StackTrace.current,
-        );
-    }
+    _handleResult(result);
   }
 
   Future<void> forgotPassword({
@@ -102,19 +148,6 @@ class AuthAction extends _$AuthAction {
           forgotPasswordUseCaseProvider,
         )
         .call(email: email);
-    switch (result) {
-      case Success():
-        state = const AsyncData(null);
-      case Failed(:final message):
-        state = AsyncError(
-          message,
-          StackTrace.current,
-        );
-      case Cancel(:final message):
-        state = AsyncError(
-          message,
-          StackTrace.current,
-        );
-    }
+    _handleResult(result);
   }
 }

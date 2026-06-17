@@ -1,10 +1,12 @@
+import 'package:caffchat/core/design/caff_color.dart';
 import 'package:caffchat/core/design/caff_radius.dart';
 import 'package:caffchat/core/design/caff_text.dart';
 import 'package:caffchat/core/design/font_config/caff_font_size.dart';
 import 'package:caffchat/core/design/font_config/caff_font_weight.dart';
 import 'package:flutter/material.dart';
 
-class CaffPrimaryButton extends StatelessWidget {
+class CaffPrimaryButton
+    extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
   final bool isLoading;
@@ -18,20 +20,30 @@ class CaffPrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
-
     return SizedBox(
       width: double.infinity,
       height: 52,
       child: ElevatedButton(
-        onPressed: isLoading ? null : onPressed,
+        onPressed: isLoading
+            ? null
+            : onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: colors.primaryContainer,
-          foregroundColor: colors.onPrimaryContainer,
-          disabledBackgroundColor: colors.primaryContainer
-              .withValues(alpha: 0.6),
+          backgroundColor: context
+              .colors
+              .primaryContainer,
+          foregroundColor: context
+              .colors
+              .onPrimaryContainer,
+          disabledBackgroundColor:
+              context
+                  .colors
+                  .primaryContainer
+                  .withValues(
+                    alpha: 0.6,
+                  ),
           shape: RoundedRectangleBorder(
-            borderRadius: CaffRadius.xlAll,
+            borderRadius:
+                CaffRadius.xlAll,
           ),
           elevation: 0,
         ),
@@ -41,14 +53,20 @@ class CaffPrimaryButton extends StatelessWidget {
                 height: 24,
                 child: CircularProgressIndicator(
                   strokeWidth: 2.5,
-                  color: colors.onPrimaryContainer,
+                  color: context
+                      .colors
+                      .onPrimaryContainer,
                 ),
               )
             : CaffText(
                 text: text,
-                size: CaffFontSize.btnTextSizeLg,
-                weight: CaffFontWeight.semiBold,
-                color: colors.onPrimaryContainer,
+                size: CaffFontSize
+                    .btnTextSizeLg,
+                weight: CaffFontWeight
+                    .semiBold,
+                color: context
+                    .colors
+                    .onPrimaryContainer,
               ),
       ),
     );

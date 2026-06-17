@@ -4,7 +4,7 @@ import 'package:caffchat/core/design/caff_text.dart';
 import 'package:caffchat/core/design/font_config/caff_font_size.dart';
 import 'package:caffchat/core/design/font_config/caff_font_weight.dart';
 import 'package:caffchat/core/router/app_route_name.dart';
-import 'package:caffchat/domain/entitites/result/result.dart';
+import 'package:caffchat/domain/entities/result/result.dart';
 import 'package:caffchat/presentation/providers/auth/auth_action_provider.dart';
 import 'package:caffchat/presentation/widgets/misc/caff_primary_button.dart';
 import 'package:caffchat/presentation/widgets/misc/caff_text_field.dart';
@@ -22,9 +22,6 @@ class LoginPage
     BuildContext context,
     WidgetRef ref,
   ) {
-    final colors = CaffColor.of(
-      context,
-    );
     final formKey = useMemoized(
       GlobalKey<FormState>.new,
     );
@@ -55,7 +52,7 @@ class LoginPage
               next.error.toString(),
             ),
             backgroundColor:
-                colors.error,
+                context.colors.error,
           ),
         );
       }
@@ -114,7 +111,8 @@ class LoginPage
                     weight:
                         CaffFontWeight
                             .bold,
-                    color: colors
+                    color: context
+                        .colors
                         .primaryContainer,
                   ),
 
@@ -180,7 +178,8 @@ class LoginPage
                                   .visibility_off_outlined
                             : Icons
                                   .visibility_outlined,
-                        color: colors
+                        color: context
+                            .colors
                             .onSurfaceVariant,
                       ),
                       onPressed: () =>
@@ -249,7 +248,8 @@ class LoginPage
                           'Forgot password?',
                       size: CaffFontSize
                           .bodyMd,
-                      color: colors
+                      color: context
+                          .colors
                           .onSurfaceVariant,
                     ),
                   ),
@@ -269,7 +269,8 @@ class LoginPage
                         size:
                             CaffFontSize
                                 .bodyMd,
-                        color: colors
+                        color: context
+                            .colors
                             .onSurfaceVariant,
                       ),
                       GestureDetector(
@@ -286,7 +287,8 @@ class LoginPage
                               .bodyMd,
                           weight: CaffFontWeight
                               .semiBold,
-                          color: colors
+                          color: context
+                              .colors
                               .primary,
                         ),
                       ),
@@ -300,111 +302,115 @@ class LoginPage
       ),
     );
   }
-}
 
-void _handleLogin(
-  BuildContext context,
-  WidgetRef ref,
-  GlobalKey<FormState> formKey,
-  TextEditingController emailController,
-  TextEditingController
-  passwordController,
-) async {
-  if (!(formKey.currentState
-          ?.validate() ??
-      false)) {
-    return;
+  /// Validates the form and triggers sign-in through the auth provider.
+  static void _handleLogin(
+    BuildContext context,
+    WidgetRef ref,
+    GlobalKey<FormState> formKey,
+    TextEditingController
+    emailController,
+    TextEditingController
+    passwordController,
+  ) async {
+    if (!(formKey.currentState
+            ?.validate() ??
+        false)) {
+      return;
+    }
+    final result = await ref
+        .read(
+          authActionProvider.notifier,
+        )
+        .signIn(
+          email: emailController.text
+              .trim(),
+          password:
+              passwordController.text,
+        );
+    if (!context.mounted) return;
+    if (result is Success) {
+      context.go(RouteName.home);
+    }
   }
-  final result = await ref
-      .read(authActionProvider.notifier)
-      .signIn(
-        email: emailController.text
-            .trim(),
-        password:
-            passwordController.text,
-      );
-  if (!context.mounted) return;
-  if (result is Success) {
-    context.go(RouteName.home);
-  }
-}
 
-void _showForgotPasswordDialog(
-  BuildContext context,
-  WidgetRef ref,
-) {
-  final forgotEmailController =
-      TextEditingController();
-  final colors = Theme.of(
-    context,
-  ).colorScheme;
-  showDialog(
-    context: context,
-    builder: (dialogContext) => AlertDialog(
-      title: const Text(
-        'Reset Password',
-      ),
-      content: TextField(
-        controller:
-            forgotEmailController,
-        keyboardType:
-            TextInputType.emailAddress,
-        decoration: const InputDecoration(
-          hintText:
-              'Enter your email address',
+  /// Shows a dialog for password reset email input.
+  static void _showForgotPasswordDialog(
+    BuildContext context,
+    WidgetRef ref,
+  ) {
+    final forgotEmailController =
+        TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text(
+          'Reset Password',
         ),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(
-            dialogContext,
-          ).pop(),
-          child: Text(
-            'Cancel',
-            style: TextStyle(
-              color: colors
-                  .onSurfaceVariant,
-            ),
+        content: TextField(
+          controller:
+              forgotEmailController,
+          keyboardType: TextInputType
+              .emailAddress,
+          decoration: const InputDecoration(
+            hintText:
+                'Enter your email address',
           ),
         ),
-        TextButton(
-          onPressed: () async {
-            final email =
-                forgotEmailController
-                    .text
-                    .trim();
-            if (email.isEmpty) return;
-            Navigator.of(
-              dialogContext,
-            ).pop();
-            await ref
-                .read(
-                  authActionProvider
-                      .notifier,
-                )
-                .forgotPassword(
-                  email: email,
-                );
-            if (context.mounted) {
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(
-                const SnackBar(
-                  content: Text(
-                    'If an account exists with that email, a reset link has been sent.',
+        actions: [
+          TextButton(
+            onPressed: () =>
+                Navigator.of(
+                  dialogContext,
+                ).pop(),
+            child: Text(
+              'Cancel',
+              style: TextStyle(
+                color: context.colors
+                    .onSurfaceVariant,
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () async {
+              final email =
+                  forgotEmailController
+                      .text
+                      .trim();
+              if (email.isEmpty) return;
+              Navigator.of(
+                dialogContext,
+              ).pop();
+              await ref
+                  .read(
+                    authActionProvider
+                        .notifier,
+                  )
+                  .forgotPassword(
+                    email: email,
+                  );
+              if (context.mounted) {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                      'If an account exists with that email, a reset link has been sent.',
+                    ),
                   ),
-                ),
-              );
-            }
-          },
-          child: Text(
-            'Send',
-            style: TextStyle(
-              color: colors.primary,
+                );
+              }
+            },
+            child: Text(
+              'Send',
+              style: TextStyle(
+                color: context.colors.primary,
+              ),
             ),
           ),
-        ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
+  }
 }

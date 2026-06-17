@@ -3,8 +3,7 @@ import 'package:caffchat/core/router/app_route_name.dart';
 import 'package:caffchat/presentation/pages/auth/login.dart';
 import 'package:caffchat/presentation/pages/auth/register.dart';
 import 'package:caffchat/presentation/pages/home/homepage.dart';
-import 'package:caffchat/presentation/pages/screens/splash_screen.dart';
-import 'package:chucker_flutter/chucker_flutter.dart';
+import 'package:caffchat/presentation/pages/splash/splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
 
@@ -22,41 +21,28 @@ class AppRouter {
   }) {
     _splashCompleted = true;
     _router?.go(
-      isAuthenticated
-          ? RouteName.home
-          : RouteName.login,
+      isAuthenticated ? RouteName.home : RouteName.login,
     );
   }
 
   static GoRouter get router {
     return _router ??= GoRouter(
-      navigatorKey:
-          AppConfig
-              .instance
-              .enableChucker
-          ? ChuckerFlutter.navigatorKey
-          : null,
       initialLocation: RouteName.splash,
-      debugLogDiagnostics: AppConfig
-          .instance
-          .enableDebugLogging,
+      debugLogDiagnostics:
+          AppConfig.instance.enableDebugLogging,
       redirect: (context, state) {
         final isSplash =
-            state.matchedLocation ==
-            RouteName.splash;
+            state.matchedLocation == RouteName.splash;
 
         // While splash hasn't completed, force stay on splash
-        if (!_splashCompleted &&
-            !isSplash) {
+        if (!_splashCompleted && !isSplash) {
           return RouteName.splash;
         }
 
         // After splash, never go back to splash
-         if (_splashCompleted &&
-            isSplash) {
+        if (_splashCompleted && isSplash) {
           final isLoggedIn =
-              FirebaseAuth.instance.currentUser !=
-                  null;
+              FirebaseAuth.instance.currentUser != null;
           return isLoggedIn
               ? RouteName.home
               : RouteName.login;

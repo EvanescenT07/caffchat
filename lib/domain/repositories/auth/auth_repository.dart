@@ -1,5 +1,5 @@
-import 'package:caffchat/domain/entitites/auth/auth_user.dart';
-import 'package:caffchat/domain/entitites/result/result.dart';
+import 'package:caffchat/domain/entities/auth/auth_user.dart';
+import 'package:caffchat/domain/entities/result/result.dart';
 
 abstract class AuthRepository {
   Stream<AuthUser?>

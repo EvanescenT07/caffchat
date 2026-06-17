@@ -97,3 +97,9 @@ class CaffColor {
       ? _scheme.surfaceContainerLowest
       : _scheme.surfaceContainerHigh;
 }
+
+extension CaffColorExtension
+    on BuildContext {
+  CaffColor get colors =>
+      CaffColor.of(this);
+}

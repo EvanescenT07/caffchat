@@ -4,7 +4,6 @@ import 'package:caffchat/core/design/font_config/caff_font_size.dart';
 import 'package:caffchat/core/design/font_config/caff_font_weight.dart';
 import 'package:caffchat/core/router/app_router.dart';
 import 'package:caffchat/presentation/providers/auth/auth_repository_provider.dart';
-import 'package:caffchat/presentation/providers/auth/auth_state_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -18,10 +17,7 @@ class SplashScreen
     BuildContext context,
     WidgetRef ref,
   ) {
-    final colors = CaffColor.of(
-      context,
-    );
-
+   
     final animationController =
         useAnimationController(
           duration: const Duration(
@@ -130,12 +126,12 @@ class SplashScreen
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              colors.primaryContainer
+              context.colors.primaryContainer
                   .withValues(
                     alpha: 0.1,
                   ),
-              colors.primaryContainer,
-              colors.primaryContainer
+              context.colors.primaryContainer,
+              context.colors.primaryContainer
                   .withValues(
                     alpha: 0.1,
                   ),
@@ -176,7 +172,7 @@ class SplashScreen
                 width: 120,
                 height: 120,
                 decoration: BoxDecoration(
-                  color: colors
+                  color: context.colors
                       .onPrimary
                       .withValues(
                         alpha: 0.08,
@@ -186,7 +182,7 @@ class SplashScreen
                         28,
                       ),
                   border: Border.all(
-                    color: colors
+                    color: context.colors
                         .onPrimary
                         .withValues(
                           alpha: 0.08,
@@ -195,7 +191,7 @@ class SplashScreen
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: colors
+                      color: context.colors
                           .primaryContainer
                           .withValues(
                             alpha: 0.01,
@@ -231,7 +227,7 @@ class SplashScreen
                     .headlineMd,
                 weight: CaffFontWeight
                     .black,
-                color: colors
+                color: context.colors
                     .onPrimaryContainer,
               ),
             ],
