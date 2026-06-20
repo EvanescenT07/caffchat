@@ -187,11 +187,37 @@ class FirestoreChatRepository
     required String userId,
   }) async {
     try {
+      final conversationDoc =
+          await _conversationsRef
+              .doc(conversationId)
+              .get();
+
+      if (!conversationDoc.exists) {
+        return Result.success(null);
+      }
+
+      final data = conversationDoc
+          .data()!;
+      final lastSenderId =
+          data['lastMessageSenderId']
+              as String?;
+
+      final updates = <String, dynamic>{
+        'unreadCount.$userId': 0,
+      };
+
+      // Update lastMessageStatus to read
+      // only if last message was from the other user
+      if (lastSenderId != null &&
+          lastSenderId != userId) {
+        updates['lastMessageStatus'] =
+            MessageStatus.read.name;
+      }
+
       await _conversationsRef
           .doc(conversationId)
-          .update({
-            'unreadCount.$userId': 0,
-          });
+          .update(updates);
+
       return Result.success(null);
     } on FirebaseException catch (e) {
       AppLogger.error(

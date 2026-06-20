@@ -12,6 +12,8 @@ import 'package:caffchat/presentation/providers/auth/auth_repository_provider.da
 import 'package:caffchat/presentation/providers/chat/chat_message_provider.dart';
 import 'package:caffchat/presentation/providers/chat/chat_repository_provider.dart';
 import 'package:caffchat/presentation/providers/chat/send_message_provider.dart';
+import 'package:caffchat/presentation/providers/chat/user_profile_uid_provider.dart';
+import 'package:caffchat/presentation/providers/user/user_presence_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -50,6 +52,62 @@ class ChatRoomPage
     final isSending =
         sendState is AsyncLoading;
 
+    // Extract other user's UID from deterministic conversation ID
+    final otherUserId =
+        _extractOtherUserId(
+          conversationId,
+          currentUserId,
+        );
+
+    // Watch other user's profile for name + online status
+    final otherUserAsync = ref.watch(
+      userProfileByUidProvider(
+        otherUserId,
+      ),
+    );
+
+    // Resolve display name and online status
+    final otherUserName =
+        otherUserAsync.whenOrNull(
+          data: (profile) =>
+              profile?.displayName,
+        ) ??
+        conversationId.substring(0, 8);
+
+    final isOtherOnline =
+        otherUserAsync.whenOrNull(
+          data: (profile) =>
+              profile?.isOnline ??
+              false,
+        ) ??
+        false;
+
+    final otherLastSeen = otherUserAsync
+        .whenOrNull(
+          data: (profile) =>
+              profile?.lastSeen,
+        );
+
+    // Presence: set online when entering, offline when leaving
+    final presenceService = ref.read(
+      userPresenceProvider,
+    );
+
+    useEffect(() {
+      if (currentUserId.isNotEmpty) {
+        presenceService.setOnline(
+          currentUserId,
+        );
+      }
+      return () {
+        if (currentUserId.isNotEmpty) {
+          presenceService.setOffline(
+            currentUserId,
+          );
+        }
+      };
+    }, [currentUserId]);
+
     // Mark as read when entering the chat
     ref.listen(
       chatMessagesProvider(
@@ -71,13 +129,10 @@ class ChatRoomPage
     );
 
     return Scaffold(
-      // TODO: [BACKEND_REQUIRED] Resolve participant name
-      // from UserProfileRepository for direct chats
       appBar: ChatroomAppBar(
-        name: conversationId.substring(
-          0,
-          8,
-        ),
+        name: otherUserName,
+        isOnline: isOtherOnline,
+        lastSeen: otherLastSeen,
       ),
       body: Column(
         children: [
@@ -212,6 +267,24 @@ class ChatRoomPage
           ),
         ],
       ),
+    );
+  }
+
+  /// Extracts other user's UID from deterministic
+  /// conversation ID format: "uid1_uid2" (sorted)
+  String _extractOtherUserId(
+    String conversationId,
+    String currentUserId,
+  ) {
+    final uids = conversationId.split(
+      '_',
+    );
+    if (uids.length != 2) {
+      return '';
+    }
+    return uids.firstWhere(
+      (uid) => uid != currentUserId,
+      orElse: () => '',
     );
   }
 

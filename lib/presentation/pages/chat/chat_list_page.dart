@@ -11,6 +11,7 @@ import 'package:caffchat/presentation/pages/chat/widgets/pinned_chat_card.dart';
 import 'package:caffchat/presentation/providers/auth/auth_repository_provider.dart';
 import 'package:caffchat/presentation/providers/chat/chat_repository_provider.dart';
 import 'package:caffchat/presentation/providers/chat/conversation_list_provider.dart';
+import 'package:caffchat/presentation/providers/chat/user_profile_uid_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -304,30 +305,9 @@ class ChatListPage
     ChatConversation conv,
     String currentUserId,
   ) {
-    final isTyping = conv.typing.entries
-        .where(
-          (e) => e.key != currentUserId,
-        )
-        .any((e) => e.value);
-    final isLastMessageFromMe =
-        conv.lastMessageSenderId ==
-        currentUserId;
-    return ConversationTile(
-      title:
-          conv.title ??
-          conv.id.substring(0, 8),
-      lastMessage: conv.lastMessage,
-      lastMessageTime:
-          conv.lastMessageTime,
-      unreadCount:
-          conv.unreadCount[currentUserId] ??
-          0,
-      isTyping: isTyping,
-      lastMessageStatus:
-          conv.lastMessageStatus,
-      conversationType: conv.type,
-      isLastMessageFromMe:
-          isLastMessageFromMe,
+    return _ResolvedConversationTile(
+      conversation: conv,
+      currentUserId: currentUserId,
       onTap: () => _navigateToChat(
         context,
         conv.id,
@@ -425,6 +405,90 @@ class ChatListPage
           ),
         ],
       ),
+    );
+  }
+}
+
+class _ResolvedConversationTile
+    extends ConsumerWidget {
+  final ChatConversation conversation;
+  final String currentUserId;
+  final VoidCallback onTap;
+
+  const _ResolvedConversationTile({
+    required this.conversation,
+    required this.currentUserId,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(
+    BuildContext context,
+    WidgetRef ref,
+  ) {
+    // Find other participant's UID
+    final otherUserId = conversation
+        .participants
+        .firstWhere(
+          (uid) => uid != currentUserId,
+          orElse: () => '',
+        );
+
+    // Watch their profile for name + online status
+    final otherUserAsync = ref.watch(
+      userProfileByUidProvider(
+        otherUserId,
+      ),
+    );
+
+    final displayName =
+        otherUserAsync.whenOrNull(
+          data: (profile) =>
+              profile?.displayName,
+        ) ??
+        conversation.title ??
+        conversation.id.substring(0, 8);
+
+    final isOnline =
+        otherUserAsync.whenOrNull(
+          data: (profile) =>
+              profile?.isOnline ??
+              false,
+        ) ??
+        false;
+
+    final isTyping = conversation
+        .typing
+        .entries
+        .where(
+          (e) => e.key != currentUserId,
+        )
+        .any((e) => e.value);
+
+    final isLastMessageFromMe =
+        conversation
+            .lastMessageSenderId ==
+        currentUserId;
+
+    return ConversationTile(
+      title: displayName,
+      lastMessage:
+          conversation.lastMessage,
+      lastMessageTime:
+          conversation.lastMessageTime,
+      unreadCount:
+          conversation
+              .unreadCount[currentUserId] ??
+          0,
+      isOnline: isOnline,
+      isTyping: isTyping,
+      lastMessageStatus: conversation
+          .lastMessageStatus,
+      conversationType:
+          conversation.type,
+      isLastMessageFromMe:
+          isLastMessageFromMe,
+      onTap: onTap,
     );
   }
 }
