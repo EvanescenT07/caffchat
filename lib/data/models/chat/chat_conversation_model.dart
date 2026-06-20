@@ -90,7 +90,7 @@ class ChatConversationModel {
     );
   }
 
-  Map<String, dynamic> toFireStore() {
+  Map<String, dynamic> toFirestore() {
     return {
       'participants': participants,
       'lastMessage': lastMessage,

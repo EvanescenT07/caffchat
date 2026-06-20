@@ -238,7 +238,7 @@ class FirestoreChatRepository
                 ConversationType.direct,
           );
       await docRef.set(
-        newConversation.toFireStore(),
+        newConversation.toFirestore(),
       );
       final createdDoc = await docRef
           .get();

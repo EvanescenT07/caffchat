@@ -11,8 +11,16 @@ service cloud.firestore {
 
     // Conversations — only participants can read/write
     match /conversations/{conversationId} {
-      allow read: if request.auth != null
+      // get: single doc fetch — allow if doc doesn't exist (resource == null)
+      // or caller is participant
+      allow get: if request.auth != null
+                 && (resource == null
+                     || request.auth.uid in resource.data.participants);
+
+      // list: query — doc always exists in result set, standard check
+      allow list: if request.auth != null
                   && request.auth.uid in resource.data.participants;
+
       allow create: if request.auth != null
                     && request.auth.uid in request.resource.data.participants;
       allow update: if request.auth != null
