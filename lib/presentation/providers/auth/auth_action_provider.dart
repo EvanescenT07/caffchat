@@ -1,6 +1,6 @@
 import 'package:caffchat/core/utils/app_logger.dart';
 import 'package:caffchat/domain/entities/auth/auth_user.dart';
-import 'package:caffchat/domain/entities/result/result.dart';
+import 'package:caffchat/domain/entities/helper/result/result.dart';
 import 'package:caffchat/presentation/providers/auth/auth_usecase_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

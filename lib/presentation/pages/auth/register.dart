@@ -5,7 +5,7 @@ import 'package:caffchat/core/design/caff_text.dart';
 import 'package:caffchat/core/design/font_config/caff_font_size.dart';
 import 'package:caffchat/core/design/font_config/caff_font_weight.dart';
 import 'package:caffchat/core/router/app_route_name.dart';
-import 'package:caffchat/domain/entities/result/result.dart';
+import 'package:caffchat/domain/entities/helper/result/result.dart';
 import 'package:caffchat/presentation/providers/auth/auth_action_provider.dart';
 import 'package:caffchat/presentation/widgets/misc/caff_primary_button.dart';
 import 'package:caffchat/presentation/widgets/misc/caff_text_field.dart';

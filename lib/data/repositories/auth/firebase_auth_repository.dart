@@ -1,6 +1,6 @@
 import 'package:caffchat/core/utils/app_logger.dart';
 import 'package:caffchat/domain/entities/auth/auth_user.dart';
-import 'package:caffchat/domain/entities/result/result.dart';
+import 'package:caffchat/domain/entities/helper/result/result.dart';
 import 'package:caffchat/domain/repositories/auth/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

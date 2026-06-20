@@ -1,4 +1,4 @@
-import 'package:caffchat/domain/entities/result/result.dart';
+import 'package:caffchat/domain/entities/helper/result/result.dart';
 import 'package:caffchat/domain/entities/user/user_profile.dart';
 
 abstract class UserProfileRepository {

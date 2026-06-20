@@ -1,6 +1,6 @@
 import 'package:caffchat/core/utils/app_logger.dart';
 import 'package:caffchat/data/models/user/user_profile_model.dart';
-import 'package:caffchat/domain/entities/result/result.dart';
+import 'package:caffchat/domain/entities/helper/result/result.dart';
 import 'package:caffchat/domain/entities/user/user_profile.dart';
 import 'package:caffchat/domain/repositories/user/user_profile_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

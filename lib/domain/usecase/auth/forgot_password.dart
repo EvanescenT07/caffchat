@@ -1,4 +1,4 @@
-import 'package:caffchat/domain/entities/result/result.dart';
+import 'package:caffchat/domain/entities/helper/result/result.dart';
 import 'package:caffchat/domain/repositories/auth/auth_repository.dart';
 
 class ForgotPassword {

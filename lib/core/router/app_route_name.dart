@@ -15,7 +15,11 @@ class RouteName {
   static const String login = '/login';
   static const String register =
       '/register';
-      
+
   // Main
   static const String home = '/home';
+
+  // Chat
+  static const String chatRoom =
+      '/chat-room';
 }

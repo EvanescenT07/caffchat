@@ -2,6 +2,7 @@ import 'package:caffchat/core/config/app_config.dart';
 import 'package:caffchat/core/router/app_route_name.dart';
 import 'package:caffchat/presentation/pages/auth/login.dart';
 import 'package:caffchat/presentation/pages/auth/register.dart';
+import 'package:caffchat/presentation/pages/chat/chatroom_page.dart';
 import 'package:caffchat/presentation/pages/home/homepage.dart';
 import 'package:caffchat/presentation/pages/splash/splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,28 +22,37 @@ class AppRouter {
   }) {
     _splashCompleted = true;
     _router?.go(
-      isAuthenticated ? RouteName.home : RouteName.login,
+      isAuthenticated
+          ? RouteName.home
+          : RouteName.login,
     );
   }
 
   static GoRouter get router {
     return _router ??= GoRouter(
       initialLocation: RouteName.splash,
-      debugLogDiagnostics:
-          AppConfig.instance.enableDebugLogging,
+      debugLogDiagnostics: AppConfig
+          .instance
+          .enableDebugLogging,
       redirect: (context, state) {
         final isSplash =
-            state.matchedLocation == RouteName.splash;
+            state.matchedLocation ==
+            RouteName.splash;
 
         // While splash hasn't completed, force stay on splash
-        if (!_splashCompleted && !isSplash) {
+        if (!_splashCompleted &&
+            !isSplash) {
           return RouteName.splash;
         }
 
         // After splash, never go back to splash
-        if (_splashCompleted && isSplash) {
+        if (_splashCompleted &&
+            isSplash) {
           final isLoggedIn =
-              FirebaseAuth.instance.currentUser != null;
+              FirebaseAuth
+                  .instance
+                  .currentUser !=
+              null;
           return isLoggedIn
               ? RouteName.home
               : RouteName.login;
@@ -74,6 +84,18 @@ class AppRouter {
           name: RouteName.register,
           builder: (context, state) =>
               const RegisterPage(),
+        ),
+
+        // Chat room with conversationId params
+        GoRoute(
+          path:
+              '${RouteName.chatRoom}/:conversationId',
+          name: RouteName.chatRoom,
+          builder: (context, state) =>
+              ChatRoomPage(
+                conversationId: state
+                    .pathParameters['conversationId']!,
+              ),
         ),
       ],
     );

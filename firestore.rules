@@ -1,55 +1,34 @@
 rules_version = '2';
-
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // ─── Helper Functions ──────────────────────────────────
-
-    function isAuthenticated() {
-      return request.auth != null;
-    }
-
-    function isOwner(userId) {
-      return isAuthenticated() && request.auth.uid == userId;
-    }
-
-    function isValidUserProfile() {
-      let data = request.resource.data;
-      return data.email is string
-          && data.displayName is string
-          && data.displayName.size() >= 1
-          && data.displayName.size() <= 100
-          && (!('bio' in data) || (data.bio == null) || (data.bio is string && data.bio.size() <= 500))
-          && (data.phoneNumber == null || data.phoneNumber is string)
-          && (data.photoUrl == null || data.photoUrl is string);
-    }
-
-    function isImmutableFieldsUnchanged() {
-      return request.resource.data.email == resource.data.email;
-    }
-
-    // ─── Users Collection ──────────────────────────────────
-
+    // Users collection (existing)
     match /users/{userId} {
-      // Any authenticated user can read profiles (needed for chat, contacts).
-      allow read: if isAuthenticated();
-
-      // Only the profile owner can create their own document.
-      allow create: if isOwner(userId)
-                    && isValidUserProfile();
-
-      // Only the profile owner can update, and immutable fields are protected.
-      allow update: if isOwner(userId)
-                    && isValidUserProfile()
-                    && isImmutableFieldsUnchanged();
-
-      // Deletion via client is blocked — handle via Cloud Functions.
-      allow delete: if false;
+      allow read: if request.auth != null;
+      allow write: if request.auth != null
+                   && request.auth.uid == userId;
     }
 
-    // ─── Default: deny everything else ─────────────────────
-    match /{document=**} {
-      allow read, write: if false;
+    // Conversations — only participants can read/write
+    match /conversations/{conversationId} {
+      allow read: if request.auth != null
+                  && request.auth.uid in resource.data.participants;
+      allow create: if request.auth != null
+                    && request.auth.uid in request.resource.data.participants;
+      allow update: if request.auth != null
+                    && request.auth.uid in resource.data.participants;
+
+      // Messages subcollection — same participant check
+      match /messages/{messageId} {
+        allow read: if request.auth != null
+                    && request.auth.uid in get(
+                      /databases/$(database)/documents/conversations/$(conversationId)
+                    ).data.participants;
+        allow create: if request.auth != null
+                      && request.auth.uid in get(
+                        /databases/$(database)/documents/conversations/$(conversationId)
+                      ).data.participants;
+      }
     }
   }
 }
