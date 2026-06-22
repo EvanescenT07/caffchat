@@ -13,6 +13,7 @@ _UserProfile _$UserProfileFromJson(Map<String, dynamic> json) => _UserProfile(
   photoUrl: json['photoUrl'] as String?,
   bio: json['bio'] as String?,
   phoneNumber: json['phoneNumber'] as String?,
+  discoverableByPhone: json['discoverableByPhone'] as bool? ?? true,
   isOnline: json['isOnline'] as bool? ?? false,
   lastSeen: json['lastSeen'] == null
       ? null
@@ -33,6 +34,7 @@ Map<String, dynamic> _$UserProfileToJson(_UserProfile instance) =>
       'photoUrl': instance.photoUrl,
       'bio': instance.bio,
       'phoneNumber': instance.phoneNumber,
+      'discoverableByPhone': instance.discoverableByPhone,
       'isOnline': instance.isOnline,
       'lastSeen': instance.lastSeen?.toIso8601String(),
       'createdAt': instance.createdAt?.toIso8601String(),

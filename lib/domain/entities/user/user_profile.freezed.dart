@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserProfile {
 
- String get uid; String get email; String get displayName; String? get photoUrl; String? get bio; String? get phoneNumber; bool get isOnline; DateTime? get lastSeen; DateTime? get createdAt; DateTime? get updatedAt;
+ String get uid; String get email; String get displayName; String? get photoUrl; String? get bio; String? get phoneNumber; bool get discoverableByPhone; bool get isOnline; DateTime? get lastSeen; DateTime? get createdAt; DateTime? get updatedAt;
 /// Create a copy of UserProfile
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $UserProfileCopyWith<UserProfile> get copyWith => _$UserProfileCopyWithImpl<User
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserProfile&&(identical(other.uid, uid) || other.uid == uid)&&(identical(other.email, email) || other.email == email)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.isOnline, isOnline) || other.isOnline == isOnline)&&(identical(other.lastSeen, lastSeen) || other.lastSeen == lastSeen)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserProfile&&(identical(other.uid, uid) || other.uid == uid)&&(identical(other.email, email) || other.email == email)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.discoverableByPhone, discoverableByPhone) || other.discoverableByPhone == discoverableByPhone)&&(identical(other.isOnline, isOnline) || other.isOnline == isOnline)&&(identical(other.lastSeen, lastSeen) || other.lastSeen == lastSeen)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,uid,email,displayName,photoUrl,bio,phoneNumber,isOnline,lastSeen,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,uid,email,displayName,photoUrl,bio,phoneNumber,discoverableByPhone,isOnline,lastSeen,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'UserProfile(uid: $uid, email: $email, displayName: $displayName, photoUrl: $photoUrl, bio: $bio, phoneNumber: $phoneNumber, isOnline: $isOnline, lastSeen: $lastSeen, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'UserProfile(uid: $uid, email: $email, displayName: $displayName, photoUrl: $photoUrl, bio: $bio, phoneNumber: $phoneNumber, discoverableByPhone: $discoverableByPhone, isOnline: $isOnline, lastSeen: $lastSeen, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $UserProfileCopyWith<$Res>  {
   factory $UserProfileCopyWith(UserProfile value, $Res Function(UserProfile) _then) = _$UserProfileCopyWithImpl;
 @useResult
 $Res call({
- String uid, String email, String displayName, String? photoUrl, String? bio, String? phoneNumber, bool isOnline, DateTime? lastSeen, DateTime? createdAt, DateTime? updatedAt
+ String uid, String email, String displayName, String? photoUrl, String? bio, String? phoneNumber, bool discoverableByPhone, bool isOnline, DateTime? lastSeen, DateTime? createdAt, DateTime? updatedAt
 });
 
 
@@ -65,7 +65,7 @@ class _$UserProfileCopyWithImpl<$Res>
 
 /// Create a copy of UserProfile
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? uid = null,Object? email = null,Object? displayName = null,Object? photoUrl = freezed,Object? bio = freezed,Object? phoneNumber = freezed,Object? isOnline = null,Object? lastSeen = freezed,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? uid = null,Object? email = null,Object? displayName = null,Object? photoUrl = freezed,Object? bio = freezed,Object? phoneNumber = freezed,Object? discoverableByPhone = null,Object? isOnline = null,Object? lastSeen = freezed,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_self.copyWith(
 uid: null == uid ? _self.uid : uid // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
@@ -73,7 +73,8 @@ as String,displayName: null == displayName ? _self.displayName : displayName // 
 as String,photoUrl: freezed == photoUrl ? _self.photoUrl : photoUrl // ignore: cast_nullable_to_non_nullable
 as String?,bio: freezed == bio ? _self.bio : bio // ignore: cast_nullable_to_non_nullable
 as String?,phoneNumber: freezed == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
-as String?,isOnline: null == isOnline ? _self.isOnline : isOnline // ignore: cast_nullable_to_non_nullable
+as String?,discoverableByPhone: null == discoverableByPhone ? _self.discoverableByPhone : discoverableByPhone // ignore: cast_nullable_to_non_nullable
+as bool,isOnline: null == isOnline ? _self.isOnline : isOnline // ignore: cast_nullable_to_non_nullable
 as bool,lastSeen: freezed == lastSeen ? _self.lastSeen : lastSeen // ignore: cast_nullable_to_non_nullable
 as DateTime?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -162,10 +163,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String uid,  String email,  String displayName,  String? photoUrl,  String? bio,  String? phoneNumber,  bool isOnline,  DateTime? lastSeen,  DateTime? createdAt,  DateTime? updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String uid,  String email,  String displayName,  String? photoUrl,  String? bio,  String? phoneNumber,  bool discoverableByPhone,  bool isOnline,  DateTime? lastSeen,  DateTime? createdAt,  DateTime? updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserProfile() when $default != null:
-return $default(_that.uid,_that.email,_that.displayName,_that.photoUrl,_that.bio,_that.phoneNumber,_that.isOnline,_that.lastSeen,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.uid,_that.email,_that.displayName,_that.photoUrl,_that.bio,_that.phoneNumber,_that.discoverableByPhone,_that.isOnline,_that.lastSeen,_that.createdAt,_that.updatedAt);case _:
   return orElse();
 
 }
@@ -183,10 +184,10 @@ return $default(_that.uid,_that.email,_that.displayName,_that.photoUrl,_that.bio
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String uid,  String email,  String displayName,  String? photoUrl,  String? bio,  String? phoneNumber,  bool isOnline,  DateTime? lastSeen,  DateTime? createdAt,  DateTime? updatedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String uid,  String email,  String displayName,  String? photoUrl,  String? bio,  String? phoneNumber,  bool discoverableByPhone,  bool isOnline,  DateTime? lastSeen,  DateTime? createdAt,  DateTime? updatedAt)  $default,) {final _that = this;
 switch (_that) {
 case _UserProfile():
-return $default(_that.uid,_that.email,_that.displayName,_that.photoUrl,_that.bio,_that.phoneNumber,_that.isOnline,_that.lastSeen,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.uid,_that.email,_that.displayName,_that.photoUrl,_that.bio,_that.phoneNumber,_that.discoverableByPhone,_that.isOnline,_that.lastSeen,_that.createdAt,_that.updatedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -203,10 +204,10 @@ return $default(_that.uid,_that.email,_that.displayName,_that.photoUrl,_that.bio
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String uid,  String email,  String displayName,  String? photoUrl,  String? bio,  String? phoneNumber,  bool isOnline,  DateTime? lastSeen,  DateTime? createdAt,  DateTime? updatedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String uid,  String email,  String displayName,  String? photoUrl,  String? bio,  String? phoneNumber,  bool discoverableByPhone,  bool isOnline,  DateTime? lastSeen,  DateTime? createdAt,  DateTime? updatedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _UserProfile() when $default != null:
-return $default(_that.uid,_that.email,_that.displayName,_that.photoUrl,_that.bio,_that.phoneNumber,_that.isOnline,_that.lastSeen,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.uid,_that.email,_that.displayName,_that.photoUrl,_that.bio,_that.phoneNumber,_that.discoverableByPhone,_that.isOnline,_that.lastSeen,_that.createdAt,_that.updatedAt);case _:
   return null;
 
 }
@@ -218,7 +219,7 @@ return $default(_that.uid,_that.email,_that.displayName,_that.photoUrl,_that.bio
 @JsonSerializable()
 
 class _UserProfile implements UserProfile {
-  const _UserProfile({required this.uid, required this.email, required this.displayName, this.photoUrl, this.bio, this.phoneNumber, this.isOnline = false, this.lastSeen, this.createdAt, this.updatedAt});
+  const _UserProfile({required this.uid, required this.email, required this.displayName, this.photoUrl, this.bio, this.phoneNumber, this.discoverableByPhone = true, this.isOnline = false, this.lastSeen, this.createdAt, this.updatedAt});
   factory _UserProfile.fromJson(Map<String, dynamic> json) => _$UserProfileFromJson(json);
 
 @override final  String uid;
@@ -227,6 +228,7 @@ class _UserProfile implements UserProfile {
 @override final  String? photoUrl;
 @override final  String? bio;
 @override final  String? phoneNumber;
+@override@JsonKey() final  bool discoverableByPhone;
 @override@JsonKey() final  bool isOnline;
 @override final  DateTime? lastSeen;
 @override final  DateTime? createdAt;
@@ -245,16 +247,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserProfile&&(identical(other.uid, uid) || other.uid == uid)&&(identical(other.email, email) || other.email == email)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.isOnline, isOnline) || other.isOnline == isOnline)&&(identical(other.lastSeen, lastSeen) || other.lastSeen == lastSeen)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserProfile&&(identical(other.uid, uid) || other.uid == uid)&&(identical(other.email, email) || other.email == email)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.discoverableByPhone, discoverableByPhone) || other.discoverableByPhone == discoverableByPhone)&&(identical(other.isOnline, isOnline) || other.isOnline == isOnline)&&(identical(other.lastSeen, lastSeen) || other.lastSeen == lastSeen)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,uid,email,displayName,photoUrl,bio,phoneNumber,isOnline,lastSeen,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,uid,email,displayName,photoUrl,bio,phoneNumber,discoverableByPhone,isOnline,lastSeen,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'UserProfile(uid: $uid, email: $email, displayName: $displayName, photoUrl: $photoUrl, bio: $bio, phoneNumber: $phoneNumber, isOnline: $isOnline, lastSeen: $lastSeen, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'UserProfile(uid: $uid, email: $email, displayName: $displayName, photoUrl: $photoUrl, bio: $bio, phoneNumber: $phoneNumber, discoverableByPhone: $discoverableByPhone, isOnline: $isOnline, lastSeen: $lastSeen, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -265,7 +267,7 @@ abstract mixin class _$UserProfileCopyWith<$Res> implements $UserProfileCopyWith
   factory _$UserProfileCopyWith(_UserProfile value, $Res Function(_UserProfile) _then) = __$UserProfileCopyWithImpl;
 @override @useResult
 $Res call({
- String uid, String email, String displayName, String? photoUrl, String? bio, String? phoneNumber, bool isOnline, DateTime? lastSeen, DateTime? createdAt, DateTime? updatedAt
+ String uid, String email, String displayName, String? photoUrl, String? bio, String? phoneNumber, bool discoverableByPhone, bool isOnline, DateTime? lastSeen, DateTime? createdAt, DateTime? updatedAt
 });
 
 
@@ -282,7 +284,7 @@ class __$UserProfileCopyWithImpl<$Res>
 
 /// Create a copy of UserProfile
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? uid = null,Object? email = null,Object? displayName = null,Object? photoUrl = freezed,Object? bio = freezed,Object? phoneNumber = freezed,Object? isOnline = null,Object? lastSeen = freezed,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? uid = null,Object? email = null,Object? displayName = null,Object? photoUrl = freezed,Object? bio = freezed,Object? phoneNumber = freezed,Object? discoverableByPhone = null,Object? isOnline = null,Object? lastSeen = freezed,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_UserProfile(
 uid: null == uid ? _self.uid : uid // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
@@ -290,7 +292,8 @@ as String,displayName: null == displayName ? _self.displayName : displayName // 
 as String,photoUrl: freezed == photoUrl ? _self.photoUrl : photoUrl // ignore: cast_nullable_to_non_nullable
 as String?,bio: freezed == bio ? _self.bio : bio // ignore: cast_nullable_to_non_nullable
 as String?,phoneNumber: freezed == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
-as String?,isOnline: null == isOnline ? _self.isOnline : isOnline // ignore: cast_nullable_to_non_nullable
+as String?,discoverableByPhone: null == discoverableByPhone ? _self.discoverableByPhone : discoverableByPhone // ignore: cast_nullable_to_non_nullable
+as bool,isOnline: null == isOnline ? _self.isOnline : isOnline // ignore: cast_nullable_to_non_nullable
 as bool,lastSeen: freezed == lastSeen ? _self.lastSeen : lastSeen // ignore: cast_nullable_to_non_nullable
 as DateTime?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable

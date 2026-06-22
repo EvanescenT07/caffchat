@@ -6,22 +6,52 @@ part of 'user_presence_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$userPresenceHash() => r'96ff1f43b86fc0825fa0dad02b76c683b3bacac7';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [userPresence].
 @ProviderFor(userPresence)
-final userPresenceProvider = Provider<UserPresenceService>.internal(
-  userPresence,
-  name: r'userPresenceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$userPresenceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final userPresenceProvider = UserPresenceProvider._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef UserPresenceRef = ProviderRef<UserPresenceService>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class UserPresenceProvider
+    extends
+        $FunctionalProvider<
+          UserPresenceService,
+          UserPresenceService,
+          UserPresenceService
+        >
+    with $Provider<UserPresenceService> {
+  UserPresenceProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'userPresenceProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$userPresenceHash();
+
+  @$internal
+  @override
+  $ProviderElement<UserPresenceService> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  UserPresenceService create(Ref ref) {
+    return userPresence(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(UserPresenceService value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<UserPresenceService>(value),
+    );
+  }
+}
+
+String _$userPresenceHash() => r'96ff1f43b86fc0825fa0dad02b76c683b3bacac7';

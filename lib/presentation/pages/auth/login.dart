@@ -5,6 +5,7 @@ import 'package:caffchat/core/design/font_config/caff_font_size.dart';
 import 'package:caffchat/core/design/font_config/caff_font_weight.dart';
 import 'package:caffchat/core/router/app_route_name.dart';
 import 'package:caffchat/domain/entities/helper/result/result.dart';
+import 'package:caffchat/presentation/pages/auth/widgets/app_version.dart';
 import 'package:caffchat/presentation/providers/auth/auth_action_provider.dart';
 import 'package:caffchat/presentation/widgets/misc/caff_primary_button.dart';
 import 'package:caffchat/presentation/widgets/misc/caff_text_field.dart';
@@ -294,6 +295,12 @@ class LoginPage
                       ),
                     ],
                   ),
+                  const SizedBox(
+                    height:
+                        CaffSpacing.lg,
+                  ),
+                  // App version display
+                  const AppVersionText(),
                 ],
               ),
             ),
@@ -367,7 +374,8 @@ class LoginPage
             child: Text(
               'Cancel',
               style: TextStyle(
-                color: context.colors
+                color: context
+                    .colors
                     .onSurfaceVariant,
               ),
             ),
@@ -405,7 +413,9 @@ class LoginPage
             child: Text(
               'Send',
               style: TextStyle(
-                color: context.colors.primary,
+                color: context
+                    .colors
+                    .primary,
               ),
             ),
           ),

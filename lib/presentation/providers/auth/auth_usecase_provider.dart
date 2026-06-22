@@ -3,7 +3,6 @@ import 'package:caffchat/domain/usecase/auth/register.dart';
 import 'package:caffchat/domain/usecase/auth/sign_in.dart';
 import 'package:caffchat/domain/usecase/auth/sign_out.dart';
 import 'package:caffchat/presentation/providers/auth/auth_repository_provider.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auth_usecase_provider.g.dart';

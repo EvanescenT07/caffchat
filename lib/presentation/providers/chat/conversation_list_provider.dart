@@ -1,7 +1,6 @@
 import 'package:caffchat/domain/entities/chat/chat_conversation.dart';
 import 'package:caffchat/presentation/providers/auth/auth_repository_provider.dart';
 import 'package:caffchat/presentation/providers/chat/chat_repository_provider.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'conversation_list_provider.g.dart';

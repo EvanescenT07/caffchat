@@ -2,9 +2,14 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Users collection (existing)
+    // Users collection
+    // Authenticated users can read profiles that are discoverable.
+    // Users who set discoverableByPhone = false are only readable by themselves.
+    // Existing docs without the field default to readable (backward-compatible).
     match /users/{userId} {
-      allow read: if request.auth != null;
+      allow read: if request.auth != null
+                   && (request.auth.uid == userId
+                       || resource.data.get('discoverableByPhone', true) == true);
       allow write: if request.auth != null
                    && request.auth.uid == userId;
     }

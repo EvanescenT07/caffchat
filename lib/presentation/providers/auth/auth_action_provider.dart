@@ -1,4 +1,5 @@
 import 'package:caffchat/core/utils/app_logger.dart';
+import 'package:caffchat/core/utils/phone_normalizer.dart';
 import 'package:caffchat/domain/entities/auth/auth_user.dart';
 import 'package:caffchat/domain/entities/helper/result/result.dart';
 import 'package:caffchat/presentation/providers/auth/auth_usecase_provider.dart';
@@ -19,7 +20,7 @@ class AuthAction extends _$AuthAction {
   ///
   /// Centralizes the result-to-state mapping to avoid
   /// duplicating the switch block across every action method.
-  void _handleResult(Result result) {
+  void _handleResult(Result<dynamic> result) {
     switch (result) {
       case Success():
         state = const AsyncData(null);
@@ -61,7 +62,10 @@ class AuthAction extends _$AuthAction {
             authUser.displayName ??
             displayName ??
             '',
-        phoneNumber: phoneNumber,
+        phoneNumber:
+            PhoneNormalizer.normalize(
+              phoneNumber,
+            ),
         createdAt: DateTime.now(),
       );
       try {

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ChatConversation {
 
- String get id; List<String> get participants; String get lastMessage; DateTime? get lastMessageTime; String? get lastMessageSenderId; MessageStatus get lastMessageStatus; ConversationType get type; String? get title; List<String> get pinnedBy; Map<String, int> get unreadCount; Map<String, bool> get typing; DateTime? get createdAt;
+ String get id; List<String> get participants; String get lastMessage; DateTime? get lastMessageTime; String? get lastMessageSenderId; MessageStatus get lastMessageStatus; ConversationType get type; String? get title; List<String> get pinnedBy; Map<String, int> get unreadCount; Map<String, bool> get typing; Map<String, DateTime> get participantsLastRead; DateTime? get createdAt;
 /// Create a copy of ChatConversation
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $ChatConversationCopyWith<ChatConversation> get copyWith => _$ChatConversationCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatConversation&&(identical(other.id, id) || other.id == id)&&const DeepCollectionEquality().equals(other.participants, participants)&&(identical(other.lastMessage, lastMessage) || other.lastMessage == lastMessage)&&(identical(other.lastMessageTime, lastMessageTime) || other.lastMessageTime == lastMessageTime)&&(identical(other.lastMessageSenderId, lastMessageSenderId) || other.lastMessageSenderId == lastMessageSenderId)&&(identical(other.lastMessageStatus, lastMessageStatus) || other.lastMessageStatus == lastMessageStatus)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title)&&const DeepCollectionEquality().equals(other.pinnedBy, pinnedBy)&&const DeepCollectionEquality().equals(other.unreadCount, unreadCount)&&const DeepCollectionEquality().equals(other.typing, typing)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatConversation&&(identical(other.id, id) || other.id == id)&&const DeepCollectionEquality().equals(other.participants, participants)&&(identical(other.lastMessage, lastMessage) || other.lastMessage == lastMessage)&&(identical(other.lastMessageTime, lastMessageTime) || other.lastMessageTime == lastMessageTime)&&(identical(other.lastMessageSenderId, lastMessageSenderId) || other.lastMessageSenderId == lastMessageSenderId)&&(identical(other.lastMessageStatus, lastMessageStatus) || other.lastMessageStatus == lastMessageStatus)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title)&&const DeepCollectionEquality().equals(other.pinnedBy, pinnedBy)&&const DeepCollectionEquality().equals(other.unreadCount, unreadCount)&&const DeepCollectionEquality().equals(other.typing, typing)&&const DeepCollectionEquality().equals(other.participantsLastRead, participantsLastRead)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,const DeepCollectionEquality().hash(participants),lastMessage,lastMessageTime,lastMessageSenderId,lastMessageStatus,type,title,const DeepCollectionEquality().hash(pinnedBy),const DeepCollectionEquality().hash(unreadCount),const DeepCollectionEquality().hash(typing),createdAt);
+int get hashCode => Object.hash(runtimeType,id,const DeepCollectionEquality().hash(participants),lastMessage,lastMessageTime,lastMessageSenderId,lastMessageStatus,type,title,const DeepCollectionEquality().hash(pinnedBy),const DeepCollectionEquality().hash(unreadCount),const DeepCollectionEquality().hash(typing),const DeepCollectionEquality().hash(participantsLastRead),createdAt);
 
 @override
 String toString() {
-  return 'ChatConversation(id: $id, participants: $participants, lastMessage: $lastMessage, lastMessageTime: $lastMessageTime, lastMessageSenderId: $lastMessageSenderId, lastMessageStatus: $lastMessageStatus, type: $type, title: $title, pinnedBy: $pinnedBy, unreadCount: $unreadCount, typing: $typing, createdAt: $createdAt)';
+  return 'ChatConversation(id: $id, participants: $participants, lastMessage: $lastMessage, lastMessageTime: $lastMessageTime, lastMessageSenderId: $lastMessageSenderId, lastMessageStatus: $lastMessageStatus, type: $type, title: $title, pinnedBy: $pinnedBy, unreadCount: $unreadCount, typing: $typing, participantsLastRead: $participantsLastRead, createdAt: $createdAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $ChatConversationCopyWith<$Res>  {
   factory $ChatConversationCopyWith(ChatConversation value, $Res Function(ChatConversation) _then) = _$ChatConversationCopyWithImpl;
 @useResult
 $Res call({
- String id, List<String> participants, String lastMessage, DateTime? lastMessageTime, String? lastMessageSenderId, MessageStatus lastMessageStatus, ConversationType type, String? title, List<String> pinnedBy, Map<String, int> unreadCount, Map<String, bool> typing, DateTime? createdAt
+ String id, List<String> participants, String lastMessage, DateTime? lastMessageTime, String? lastMessageSenderId, MessageStatus lastMessageStatus, ConversationType type, String? title, List<String> pinnedBy, Map<String, int> unreadCount, Map<String, bool> typing, Map<String, DateTime> participantsLastRead, DateTime? createdAt
 });
 
 
@@ -65,7 +65,7 @@ class _$ChatConversationCopyWithImpl<$Res>
 
 /// Create a copy of ChatConversation
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? participants = null,Object? lastMessage = null,Object? lastMessageTime = freezed,Object? lastMessageSenderId = freezed,Object? lastMessageStatus = null,Object? type = null,Object? title = freezed,Object? pinnedBy = null,Object? unreadCount = null,Object? typing = null,Object? createdAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? participants = null,Object? lastMessage = null,Object? lastMessageTime = freezed,Object? lastMessageSenderId = freezed,Object? lastMessageStatus = null,Object? type = null,Object? title = freezed,Object? pinnedBy = null,Object? unreadCount = null,Object? typing = null,Object? participantsLastRead = null,Object? createdAt = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,participants: null == participants ? _self.participants : participants // ignore: cast_nullable_to_non_nullable
@@ -78,7 +78,8 @@ as ConversationType,title: freezed == title ? _self.title : title // ignore: cas
 as String?,pinnedBy: null == pinnedBy ? _self.pinnedBy : pinnedBy // ignore: cast_nullable_to_non_nullable
 as List<String>,unreadCount: null == unreadCount ? _self.unreadCount : unreadCount // ignore: cast_nullable_to_non_nullable
 as Map<String, int>,typing: null == typing ? _self.typing : typing // ignore: cast_nullable_to_non_nullable
-as Map<String, bool>,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as Map<String, bool>,participantsLastRead: null == participantsLastRead ? _self.participantsLastRead : participantsLastRead // ignore: cast_nullable_to_non_nullable
+as Map<String, DateTime>,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));
 }
@@ -164,10 +165,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  List<String> participants,  String lastMessage,  DateTime? lastMessageTime,  String? lastMessageSenderId,  MessageStatus lastMessageStatus,  ConversationType type,  String? title,  List<String> pinnedBy,  Map<String, int> unreadCount,  Map<String, bool> typing,  DateTime? createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  List<String> participants,  String lastMessage,  DateTime? lastMessageTime,  String? lastMessageSenderId,  MessageStatus lastMessageStatus,  ConversationType type,  String? title,  List<String> pinnedBy,  Map<String, int> unreadCount,  Map<String, bool> typing,  Map<String, DateTime> participantsLastRead,  DateTime? createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ChatConversation() when $default != null:
-return $default(_that.id,_that.participants,_that.lastMessage,_that.lastMessageTime,_that.lastMessageSenderId,_that.lastMessageStatus,_that.type,_that.title,_that.pinnedBy,_that.unreadCount,_that.typing,_that.createdAt);case _:
+return $default(_that.id,_that.participants,_that.lastMessage,_that.lastMessageTime,_that.lastMessageSenderId,_that.lastMessageStatus,_that.type,_that.title,_that.pinnedBy,_that.unreadCount,_that.typing,_that.participantsLastRead,_that.createdAt);case _:
   return orElse();
 
 }
@@ -185,10 +186,10 @@ return $default(_that.id,_that.participants,_that.lastMessage,_that.lastMessageT
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  List<String> participants,  String lastMessage,  DateTime? lastMessageTime,  String? lastMessageSenderId,  MessageStatus lastMessageStatus,  ConversationType type,  String? title,  List<String> pinnedBy,  Map<String, int> unreadCount,  Map<String, bool> typing,  DateTime? createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  List<String> participants,  String lastMessage,  DateTime? lastMessageTime,  String? lastMessageSenderId,  MessageStatus lastMessageStatus,  ConversationType type,  String? title,  List<String> pinnedBy,  Map<String, int> unreadCount,  Map<String, bool> typing,  Map<String, DateTime> participantsLastRead,  DateTime? createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _ChatConversation():
-return $default(_that.id,_that.participants,_that.lastMessage,_that.lastMessageTime,_that.lastMessageSenderId,_that.lastMessageStatus,_that.type,_that.title,_that.pinnedBy,_that.unreadCount,_that.typing,_that.createdAt);case _:
+return $default(_that.id,_that.participants,_that.lastMessage,_that.lastMessageTime,_that.lastMessageSenderId,_that.lastMessageStatus,_that.type,_that.title,_that.pinnedBy,_that.unreadCount,_that.typing,_that.participantsLastRead,_that.createdAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -205,10 +206,10 @@ return $default(_that.id,_that.participants,_that.lastMessage,_that.lastMessageT
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  List<String> participants,  String lastMessage,  DateTime? lastMessageTime,  String? lastMessageSenderId,  MessageStatus lastMessageStatus,  ConversationType type,  String? title,  List<String> pinnedBy,  Map<String, int> unreadCount,  Map<String, bool> typing,  DateTime? createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  List<String> participants,  String lastMessage,  DateTime? lastMessageTime,  String? lastMessageSenderId,  MessageStatus lastMessageStatus,  ConversationType type,  String? title,  List<String> pinnedBy,  Map<String, int> unreadCount,  Map<String, bool> typing,  Map<String, DateTime> participantsLastRead,  DateTime? createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _ChatConversation() when $default != null:
-return $default(_that.id,_that.participants,_that.lastMessage,_that.lastMessageTime,_that.lastMessageSenderId,_that.lastMessageStatus,_that.type,_that.title,_that.pinnedBy,_that.unreadCount,_that.typing,_that.createdAt);case _:
+return $default(_that.id,_that.participants,_that.lastMessage,_that.lastMessageTime,_that.lastMessageSenderId,_that.lastMessageStatus,_that.type,_that.title,_that.pinnedBy,_that.unreadCount,_that.typing,_that.participantsLastRead,_that.createdAt);case _:
   return null;
 
 }
@@ -220,7 +221,7 @@ return $default(_that.id,_that.participants,_that.lastMessage,_that.lastMessageT
 @JsonSerializable()
 
 class _ChatConversation implements ChatConversation {
-  const _ChatConversation({required this.id, required final  List<String> participants, this.lastMessage = '', this.lastMessageTime, this.lastMessageSenderId, this.lastMessageStatus = MessageStatus.sent, this.type = ConversationType.direct, this.title, final  List<String> pinnedBy = const [], final  Map<String, int> unreadCount = const {}, final  Map<String, bool> typing = const {}, this.createdAt}): _participants = participants,_pinnedBy = pinnedBy,_unreadCount = unreadCount,_typing = typing;
+  const _ChatConversation({required this.id, required final  List<String> participants, this.lastMessage = '', this.lastMessageTime, this.lastMessageSenderId, this.lastMessageStatus = MessageStatus.sent, this.type = ConversationType.direct, this.title, final  List<String> pinnedBy = const [], final  Map<String, int> unreadCount = const {}, final  Map<String, bool> typing = const {}, final  Map<String, DateTime> participantsLastRead = const {}, this.createdAt}): _participants = participants,_pinnedBy = pinnedBy,_unreadCount = unreadCount,_typing = typing,_participantsLastRead = participantsLastRead;
   factory _ChatConversation.fromJson(Map<String, dynamic> json) => _$ChatConversationFromJson(json);
 
 @override final  String id;
@@ -258,6 +259,13 @@ class _ChatConversation implements ChatConversation {
   return EqualUnmodifiableMapView(_typing);
 }
 
+ final  Map<String, DateTime> _participantsLastRead;
+@override@JsonKey() Map<String, DateTime> get participantsLastRead {
+  if (_participantsLastRead is EqualUnmodifiableMapView) return _participantsLastRead;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableMapView(_participantsLastRead);
+}
+
 @override final  DateTime? createdAt;
 
 /// Create a copy of ChatConversation
@@ -273,16 +281,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatConversation&&(identical(other.id, id) || other.id == id)&&const DeepCollectionEquality().equals(other._participants, _participants)&&(identical(other.lastMessage, lastMessage) || other.lastMessage == lastMessage)&&(identical(other.lastMessageTime, lastMessageTime) || other.lastMessageTime == lastMessageTime)&&(identical(other.lastMessageSenderId, lastMessageSenderId) || other.lastMessageSenderId == lastMessageSenderId)&&(identical(other.lastMessageStatus, lastMessageStatus) || other.lastMessageStatus == lastMessageStatus)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title)&&const DeepCollectionEquality().equals(other._pinnedBy, _pinnedBy)&&const DeepCollectionEquality().equals(other._unreadCount, _unreadCount)&&const DeepCollectionEquality().equals(other._typing, _typing)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatConversation&&(identical(other.id, id) || other.id == id)&&const DeepCollectionEquality().equals(other._participants, _participants)&&(identical(other.lastMessage, lastMessage) || other.lastMessage == lastMessage)&&(identical(other.lastMessageTime, lastMessageTime) || other.lastMessageTime == lastMessageTime)&&(identical(other.lastMessageSenderId, lastMessageSenderId) || other.lastMessageSenderId == lastMessageSenderId)&&(identical(other.lastMessageStatus, lastMessageStatus) || other.lastMessageStatus == lastMessageStatus)&&(identical(other.type, type) || other.type == type)&&(identical(other.title, title) || other.title == title)&&const DeepCollectionEquality().equals(other._pinnedBy, _pinnedBy)&&const DeepCollectionEquality().equals(other._unreadCount, _unreadCount)&&const DeepCollectionEquality().equals(other._typing, _typing)&&const DeepCollectionEquality().equals(other._participantsLastRead, _participantsLastRead)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,const DeepCollectionEquality().hash(_participants),lastMessage,lastMessageTime,lastMessageSenderId,lastMessageStatus,type,title,const DeepCollectionEquality().hash(_pinnedBy),const DeepCollectionEquality().hash(_unreadCount),const DeepCollectionEquality().hash(_typing),createdAt);
+int get hashCode => Object.hash(runtimeType,id,const DeepCollectionEquality().hash(_participants),lastMessage,lastMessageTime,lastMessageSenderId,lastMessageStatus,type,title,const DeepCollectionEquality().hash(_pinnedBy),const DeepCollectionEquality().hash(_unreadCount),const DeepCollectionEquality().hash(_typing),const DeepCollectionEquality().hash(_participantsLastRead),createdAt);
 
 @override
 String toString() {
-  return 'ChatConversation(id: $id, participants: $participants, lastMessage: $lastMessage, lastMessageTime: $lastMessageTime, lastMessageSenderId: $lastMessageSenderId, lastMessageStatus: $lastMessageStatus, type: $type, title: $title, pinnedBy: $pinnedBy, unreadCount: $unreadCount, typing: $typing, createdAt: $createdAt)';
+  return 'ChatConversation(id: $id, participants: $participants, lastMessage: $lastMessage, lastMessageTime: $lastMessageTime, lastMessageSenderId: $lastMessageSenderId, lastMessageStatus: $lastMessageStatus, type: $type, title: $title, pinnedBy: $pinnedBy, unreadCount: $unreadCount, typing: $typing, participantsLastRead: $participantsLastRead, createdAt: $createdAt)';
 }
 
 
@@ -293,7 +301,7 @@ abstract mixin class _$ChatConversationCopyWith<$Res> implements $ChatConversati
   factory _$ChatConversationCopyWith(_ChatConversation value, $Res Function(_ChatConversation) _then) = __$ChatConversationCopyWithImpl;
 @override @useResult
 $Res call({
- String id, List<String> participants, String lastMessage, DateTime? lastMessageTime, String? lastMessageSenderId, MessageStatus lastMessageStatus, ConversationType type, String? title, List<String> pinnedBy, Map<String, int> unreadCount, Map<String, bool> typing, DateTime? createdAt
+ String id, List<String> participants, String lastMessage, DateTime? lastMessageTime, String? lastMessageSenderId, MessageStatus lastMessageStatus, ConversationType type, String? title, List<String> pinnedBy, Map<String, int> unreadCount, Map<String, bool> typing, Map<String, DateTime> participantsLastRead, DateTime? createdAt
 });
 
 
@@ -310,7 +318,7 @@ class __$ChatConversationCopyWithImpl<$Res>
 
 /// Create a copy of ChatConversation
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? participants = null,Object? lastMessage = null,Object? lastMessageTime = freezed,Object? lastMessageSenderId = freezed,Object? lastMessageStatus = null,Object? type = null,Object? title = freezed,Object? pinnedBy = null,Object? unreadCount = null,Object? typing = null,Object? createdAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? participants = null,Object? lastMessage = null,Object? lastMessageTime = freezed,Object? lastMessageSenderId = freezed,Object? lastMessageStatus = null,Object? type = null,Object? title = freezed,Object? pinnedBy = null,Object? unreadCount = null,Object? typing = null,Object? participantsLastRead = null,Object? createdAt = freezed,}) {
   return _then(_ChatConversation(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,participants: null == participants ? _self._participants : participants // ignore: cast_nullable_to_non_nullable
@@ -323,7 +331,8 @@ as ConversationType,title: freezed == title ? _self.title : title // ignore: cas
 as String?,pinnedBy: null == pinnedBy ? _self._pinnedBy : pinnedBy // ignore: cast_nullable_to_non_nullable
 as List<String>,unreadCount: null == unreadCount ? _self._unreadCount : unreadCount // ignore: cast_nullable_to_non_nullable
 as Map<String, int>,typing: null == typing ? _self._typing : typing // ignore: cast_nullable_to_non_nullable
-as Map<String, bool>,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as Map<String, bool>,participantsLastRead: null == participantsLastRead ? _self._participantsLastRead : participantsLastRead // ignore: cast_nullable_to_non_nullable
+as Map<String, DateTime>,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));
 }

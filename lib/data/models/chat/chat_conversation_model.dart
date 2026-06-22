@@ -18,6 +18,8 @@ class ChatConversationModel {
   final List<String> pinnedBy;
   final Map<String, int> unreadCount;
   final Map<String, bool> typing;
+  final Map<String, DateTime>
+  participantsLastRead;
   final DateTime? createdAt;
 
   const ChatConversationModel({
@@ -33,6 +35,8 @@ class ChatConversationModel {
     this.pinnedBy = const [],
     this.unreadCount = const {},
     this.typing = const {},
+    this.participantsLastRead =
+        const {},
     this.createdAt,
   });
 
@@ -83,11 +87,34 @@ class ChatConversationModel {
       typing: Map<String, bool>.from(
         data['typing'] as Map? ?? {},
       ),
+      participantsLastRead:
+          _parseLastReadMap(
+            data['participantsLastRead']
+                as Map?,
+          ),
       createdAt:
           (data['createdAt']
                   as Timestamp?)
               ?.toDate(),
     );
+  }
+
+  /// Converts Firestore `Map<String, Timestamp>` Dart `Map<String, DateTime>`
+  static Map<String, DateTime>
+  _parseLastReadMap(
+    Map<dynamic, dynamic>? raw,
+  ) {
+    if (raw == null) return {};
+    return raw.map((key, value) {
+      final dateTime =
+          value is Timestamp
+          ? value.toDate()
+          : DateTime.now();
+      return MapEntry(
+        key as String,
+        dateTime,
+      );
+    });
   }
 
   Map<String, dynamic> toFirestore() {
@@ -109,6 +136,13 @@ class ChatConversationModel {
       'pinnedBy': pinnedBy,
       'unreadCount': unreadCount,
       'typing': typing,
+      'participantsLastRead':
+          participantsLastRead.map(
+            (key, value) => MapEntry(
+              key,
+              Timestamp.fromDate(value),
+            ),
+          ),
       'createdAt': createdAt != null
           ? Timestamp.fromDate(
               createdAt!,
@@ -132,6 +166,8 @@ class ChatConversationModel {
       unreadCount: unreadCount,
       typing: typing,
       pinnedBy: pinnedBy,
+      participantsLastRead:
+          participantsLastRead,
       createdAt: createdAt,
     );
   }
@@ -143,14 +179,19 @@ class ChatConversationModel {
       id: entity.id,
       participants: entity.participants,
       lastMessage: entity.lastMessage,
-      lastMessageSenderId: entity.lastMessageSenderId,
-      lastMessageStatus: entity.lastMessageStatus,
-      lastMessageTime: entity.lastMessageTime,
+      lastMessageSenderId:
+          entity.lastMessageSenderId,
+      lastMessageStatus:
+          entity.lastMessageStatus,
+      lastMessageTime:
+          entity.lastMessageTime,
       type: entity.type,
       title: entity.title,
       unreadCount: entity.unreadCount,
       typing: entity.typing,
       pinnedBy: entity.pinnedBy,
+      participantsLastRead:
+          entity.participantsLastRead,
       createdAt: entity.createdAt,
     );
   }

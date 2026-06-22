@@ -6,23 +6,46 @@ part of 'conversation_list_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$conversationListHash() => r'aee4c739e93513e7ddadd9329125f765cf972207';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [conversationList].
 @ProviderFor(conversationList)
-final conversationListProvider =
-    StreamProvider<List<ChatConversation>>.internal(
-      conversationList,
-      name: r'conversationListProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$conversationListHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+final conversationListProvider = ConversationListProvider._();
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
-typedef ConversationListRef = StreamProviderRef<List<ChatConversation>>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+final class ConversationListProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<ChatConversation>>,
+          List<ChatConversation>,
+          Stream<List<ChatConversation>>
+        >
+    with
+        $FutureModifier<List<ChatConversation>>,
+        $StreamProvider<List<ChatConversation>> {
+  ConversationListProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'conversationListProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$conversationListHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<List<ChatConversation>> $createElement(
+    $ProviderPointer pointer,
+  ) => $StreamProviderElement(pointer);
+
+  @override
+  Stream<List<ChatConversation>> create(Ref ref) {
+    return conversationList(ref);
+  }
+}
+
+String _$conversationListHash() => r'aee4c739e93513e7ddadd9329125f765cf972207';

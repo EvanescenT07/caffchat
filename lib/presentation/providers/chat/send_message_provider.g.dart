@@ -6,21 +6,58 @@ part of 'send_message_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(SendMessage)
+final sendMessageProvider = SendMessageProvider._();
+
+final class SendMessageProvider
+    extends $NotifierProvider<SendMessage, AsyncValue<ChatMessage?>> {
+  SendMessageProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'sendMessageProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$sendMessageHash();
+
+  @$internal
+  @override
+  SendMessage create() => SendMessage();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(AsyncValue<ChatMessage?> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<AsyncValue<ChatMessage?>>(value),
+    );
+  }
+}
+
 String _$sendMessageHash() => r'821d0e15a51dbe6852d1d20eced9eab2d219b9a2';
 
-/// See also [SendMessage].
-@ProviderFor(SendMessage)
-final sendMessageProvider =
-    AutoDisposeNotifierProvider<SendMessage, AsyncValue<ChatMessage?>>.internal(
-      SendMessage.new,
-      name: r'sendMessageProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$sendMessageHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
-
-typedef _$SendMessage = AutoDisposeNotifier<AsyncValue<ChatMessage?>>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$SendMessage extends $Notifier<AsyncValue<ChatMessage?>> {
+  AsyncValue<ChatMessage?> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref =
+        this.ref as $Ref<AsyncValue<ChatMessage?>, AsyncValue<ChatMessage?>>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<ChatMessage?>, AsyncValue<ChatMessage?>>,
+              AsyncValue<ChatMessage?>,
+              Object?,
+              Object?
+            >;
+    element.handleCreate(ref, build);
+  }
+}

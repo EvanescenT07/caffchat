@@ -12,6 +12,7 @@ abstract class UserProfile with _$UserProfile {
     String? photoUrl,
     String? bio,
     String? phoneNumber,
+    @Default(true) bool discoverableByPhone,
     @Default(false) bool isOnline,
     DateTime? lastSeen,
     DateTime? createdAt,

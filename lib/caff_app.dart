@@ -2,6 +2,8 @@
 import 'package:caffchat/core/design/theme/app_theme.dart';
 import 'package:caffchat/core/lifecycle/app_lifecycle.dart';
 import 'package:caffchat/core/router/app_router.dart';
+import 'package:caffchat/l10n/app_localizations.dart';
+import 'package:caffchat/presentation/providers/locale_provider.dart';
 import 'package:caffchat/presentation/providers/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -18,6 +20,9 @@ class CaffChat
     final themeMode = ref.watch(
       themeModeProvider,
     );
+    final locale = ref.watch(
+      localeProvider,
+    );
     return AppLifecycle(
       child: MaterialApp.router(
         title: 'CaffChat',
@@ -26,6 +31,13 @@ class CaffChat
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,
         themeMode: themeMode,
+        locale: locale,
+        localizationsDelegates:
+            AppLocalizations
+                .localizationsDelegates,
+        supportedLocales:
+            AppLocalizations
+                .supportedLocales,
         routerConfig: AppRouter.router,
       ),
     );

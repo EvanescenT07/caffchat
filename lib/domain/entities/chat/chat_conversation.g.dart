@@ -38,6 +38,11 @@ _ChatConversation _$ChatConversationFromJson(
         (k, e) => MapEntry(k, e as bool),
       ) ??
       const {},
+  participantsLastRead:
+      (json['participantsLastRead'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, DateTime.parse(e as String)),
+      ) ??
+      const {},
   createdAt: json['createdAt'] == null
       ? null
       : DateTime.parse(json['createdAt'] as String),
@@ -56,6 +61,9 @@ Map<String, dynamic> _$ChatConversationToJson(_ChatConversation instance) =>
       'pinnedBy': instance.pinnedBy,
       'unreadCount': instance.unreadCount,
       'typing': instance.typing,
+      'participantsLastRead': instance.participantsLastRead.map(
+        (k, e) => MapEntry(k, e.toIso8601String()),
+      ),
       'createdAt': instance.createdAt?.toIso8601String(),
     };
 

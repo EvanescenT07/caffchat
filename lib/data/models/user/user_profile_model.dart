@@ -8,6 +8,7 @@ class UserProfileModel {
   final String? photoUrl;
   final String? bio;
   final String? phoneNumber;
+  final bool discoverableByPhone;
   final bool isOnline;
   final DateTime? lastSeen;
   final DateTime? createdAt;
@@ -20,6 +21,7 @@ class UserProfileModel {
     this.photoUrl,
     this.bio,
     this.phoneNumber,
+    this.discoverableByPhone = true,
     this.isOnline = false,
     this.lastSeen,
     this.createdAt,
@@ -43,7 +45,11 @@ class UserProfileModel {
           data['photoUrl'] as String?,
       bio: data['bio'] as String?,
       phoneNumber:
-          data['phoneNumber'] as String,
+          data['phoneNumber'] as String?,
+      discoverableByPhone:
+          data['discoverableByPhone']
+              as bool? ??
+          true,
       isOnline:
           data['isOnline'] as bool? ??
           false,
@@ -70,6 +76,8 @@ class UserProfileModel {
       'photoUrl': photoUrl,
       'bio': bio,
       'phoneNumber': phoneNumber,
+      'discoverableByPhone':
+          discoverableByPhone,
       'isOnline': isOnline,
       'lastSeen': lastSeen != null
           ? Timestamp.fromDate(
@@ -95,6 +103,8 @@ class UserProfileModel {
       photoUrl: photoUrl,
       bio: bio,
       phoneNumber: phoneNumber,
+      discoverableByPhone:
+          discoverableByPhone,
       isOnline: isOnline,
       lastSeen: lastSeen,
       createdAt: createdAt,
@@ -113,6 +123,8 @@ class UserProfileModel {
       photoUrl: entity.photoUrl,
       bio: entity.bio,
       phoneNumber: entity.phoneNumber,
+      discoverableByPhone:
+          entity.discoverableByPhone,
       isOnline: entity.isOnline,
       lastSeen: entity.lastSeen,
       createdAt: entity.createdAt,
