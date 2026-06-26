@@ -7,11 +7,12 @@ import 'package:caffchat/core/router/app_route_name.dart';
 import 'package:caffchat/domain/entities/chat/chat_conversation.dart';
 import 'package:caffchat/domain/entities/helper/result/result.dart';
 import 'package:caffchat/presentation/pages/chat/widgets/conversation_tile.dart';
+import 'package:caffchat/presentation/pages/chat/widgets/new_chat_dialog.dart';
 import 'package:caffchat/presentation/pages/chat/widgets/pinned_chat_card.dart';
 import 'package:caffchat/presentation/providers/auth/auth_repository_provider.dart';
-import 'package:caffchat/presentation/providers/chat/chat_repository_provider.dart';
 import 'package:caffchat/presentation/providers/chat/conversation_list_provider.dart';
 import 'package:caffchat/presentation/providers/chat/user_profile_uid_provider.dart';
+import 'package:caffchat/presentation/providers/user/user_profile_repository_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -273,7 +274,6 @@ class ChatListPage
             foregroundColor: context
                 .colors
                 .onPrimaryContainer,
-            // TODO: [BACKEND_REQUIRED] New chat screen
             onPressed: () =>
                 _showNewChatDialog(
                   context,
@@ -320,92 +320,37 @@ class ChatListPage
     WidgetRef ref,
     String currentUserId,
   ) {
-    final textController =
-        TextEditingController();
-
-    showDialog(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: const Text('New Chat'),
-        content: TextField(
-          controller: textController,
-          decoration:
-              const InputDecoration(
-                hintText:
-                    'Enter user UID',
-                labelText:
-                    'Other User UID',
-              ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () =>
-                Navigator.of(
-                  dialogContext,
-                ).pop(),
-            child: const Text('Cancel'),
-          ),
-          FilledButton(
-            onPressed: () async {
-              final otherUid =
-                  textController.text
-                      .trim();
-              if (otherUid.isEmpty ||
-                  otherUid ==
-                      currentUserId) {
-                return;
-              }
-
-              Navigator.of(
-                dialogContext,
-              ).pop();
-
-              final chatRepo = ref.read(
-                chatRepositoryProvider,
-              );
-              final result = await chatRepo
-                  .getOrCreateDirectConversation(
-                    currentUserId:
-                        currentUserId,
-                    otherUserId:
-                        otherUid,
-                  );
-
-              switch (result) {
-                case Success(
-                  :final value,
-                ):
-                  if (context.mounted) {
-                    _navigateToChat(
-                      context,
-                      value.id,
-                    );
-                  }
-                case Failed(
-                  :final message,
-                ):
-                  if (context.mounted) {
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          message,
-                        ),
-                      ),
-                    );
-                  }
-                case Cancel():
-                  break;
-              }
-            },
-            child: const Text(
-              'Start Chat',
-            ),
-          ),
-        ],
-      ),
+    // Fetch current user's phone for self-chat prevention
+    final profileRepo = ref.read(
+      userProfileRepositoryProvider,
     );
+    profileRepo
+        .getProfile(currentUserId)
+        .then((result) {
+          if (!context.mounted) return;
+          final currentUserPhone =
+              result is Success
+              ? result
+                    .resultValue
+                    ?.phoneNumber
+              : null;
+
+          showDialog(
+            context: context,
+            builder: (_) => NewChatDialog(
+              currentUserId:
+                  currentUserId,
+              currentUserPhone:
+                  currentUserPhone,
+              onChatCreated:
+                  (conversationId) =>
+                      _navigateToChat(
+                        context,
+                        conversationId,
+                      ),
+            ),
+          );
+        });
   }
 }
 

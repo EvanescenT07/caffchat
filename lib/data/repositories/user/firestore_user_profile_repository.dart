@@ -153,15 +153,14 @@ class FirestoreUserProfileRepository
     String phoneNumber,
   ) async {
     try {
+      // Query by phone number only — no discoverable filter.
+      // This lets us distinguish "not found" vs "not discoverable"
+      // for better UX messaging.
       final query =
           await _usersCollection
               .where(
                 'phoneNumber',
                 isEqualTo: phoneNumber,
-              )
-              .where(
-                'discoverableByPhone',
-                isEqualTo: true,
               )
               .limit(1)
               .get();
@@ -172,9 +171,21 @@ class FirestoreUserProfileRepository
         );
       }
 
+      final doc = query.docs.first;
+      final isDiscoverable =
+          doc.data()['discoverableByPhone']
+              as bool? ??
+          true;
+
+      if (!isDiscoverable) {
+        return Result.failed(
+          'This user has disabled phone number discovery',
+        );
+      }
+
       final model =
           UserProfileModel.fromFirestore(
-            query.docs.first,
+            doc,
           );
 
       return Result.success(

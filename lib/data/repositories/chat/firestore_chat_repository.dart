@@ -255,6 +255,21 @@ class FirestoreChatRepository
           ).toEntity(),
         );
       }
+
+      // Defense-in-depth: verify other user exists
+      // before creating an orphaned conversation
+      final otherUserDoc =
+          await _firestore
+              .collection('users')
+              .doc(otherUserId)
+              .get();
+
+      if (!otherUserDoc.exists) {
+        return Result.failed(
+          'Cannot create conversation: user does not exist',
+        );
+      }
+
       // Create new — use set() not add() for idempotency
       final newConversation =
           ChatConversationModel(

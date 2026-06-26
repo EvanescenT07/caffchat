@@ -13,6 +13,7 @@ import 'package:caffchat/presentation/providers/auth/auth_action_provider.dart';
 import 'package:caffchat/presentation/providers/auth/auth_repository_provider.dart';
 import 'package:caffchat/presentation/providers/locale_provider.dart';
 import 'package:caffchat/presentation/providers/theme_provider.dart';
+import 'package:caffchat/presentation/providers/user/current_user_profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -29,11 +30,10 @@ class SettingsPage
     final l10n = AppLocalizations.of(
       context,
     );
-    final authRepo = ref.watch(
-      authRepositoryProvider,
-    );
-    final currentUser =
-        authRepo.currentUser;
+    final currentProfileAsync = ref
+        .watch(
+          currentUserProfileProvider,
+        );
     final locale = ref.watch(
       localeProvider,
     );
@@ -65,11 +65,21 @@ class SettingsPage
           // Profile Header
           ProfileHeader(
             displayName:
-                currentUser
-                    ?.displayName ??
+                currentProfileAsync
+                    .whenOrNull(
+                      data: (profile) =>
+                          profile
+                              ?.displayName,
+                    ) ??
                 '',
+
             email:
-                currentUser?.email ??
+                currentProfileAsync
+                    .whenOrNull(
+                      data: (profile) =>
+                          profile
+                              ?.email,
+                    ) ??
                 '',
             onTap: () =>
                 context.pushNamed(
@@ -154,7 +164,7 @@ class SettingsPage
             padding:
                 const EdgeInsets.symmetric(
                   horizontal:
-                      CaffSpacing.lg,
+                      CaffSpacing.md,
                   vertical:
                       CaffSpacing.sm,
                 ),
@@ -284,7 +294,7 @@ class SettingsPage
             title: l10n.dangerZone,
           ),
           SettingsTile(
-            icon: Icons.logout,
+            icon: Icons.logout_rounded,
             title: l10n.signOut,
             iconColor:
                 context.colors.error,

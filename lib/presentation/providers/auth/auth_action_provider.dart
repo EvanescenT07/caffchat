@@ -3,6 +3,7 @@ import 'package:caffchat/core/utils/phone_normalizer.dart';
 import 'package:caffchat/domain/entities/auth/auth_user.dart';
 import 'package:caffchat/domain/entities/helper/result/result.dart';
 import 'package:caffchat/presentation/providers/auth/auth_usecase_provider.dart';
+import 'package:caffchat/presentation/providers/chat/conversation_list_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:caffchat/domain/entities/user/user_profile.dart';
@@ -156,23 +157,31 @@ class AuthAction extends _$AuthAction {
         .call();
     if (!ref.mounted) return;
     _handleResult(result);
+
+    if (result is Success) {
+      ref.invalidate(
+        conversationListProvider,
+      );
+    }
   }
 
-    Future<void> changePassword({
+  Future<void> changePassword({
     required String currentPassword,
     required String newPassword,
   }) async {
     state = const AsyncLoading();
     final result = await ref
-        .read(changePasswordUseCaseProvider)
+        .read(
+          changePasswordUseCaseProvider,
+        )
         .call(
-          currentPassword: currentPassword,
+          currentPassword:
+              currentPassword,
           newPassword: newPassword,
         );
     if (!ref.mounted) return;
     _handleResult(result);
   }
-
 
   Future<void> forgotPassword({
     required String email,
