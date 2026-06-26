@@ -10,7 +10,6 @@ import 'package:caffchat/presentation/pages/settings/widgets/profile_header.dart
 import 'package:caffchat/presentation/pages/settings/widgets/settings_tile.dart';
 import 'package:caffchat/presentation/providers/app_version_provider.dart';
 import 'package:caffchat/presentation/providers/auth/auth_action_provider.dart';
-import 'package:caffchat/presentation/providers/auth/auth_repository_provider.dart';
 import 'package:caffchat/presentation/providers/locale_provider.dart';
 import 'package:caffchat/presentation/providers/theme_provider.dart';
 import 'package:caffchat/presentation/providers/user/current_user_profile_provider.dart';

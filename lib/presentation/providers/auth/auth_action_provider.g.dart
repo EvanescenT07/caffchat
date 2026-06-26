@@ -41,7 +41,7 @@ final class AuthActionProvider
   }
 }
 
-String _$authActionHash() => r'3a6092c0096d5f9af782856fdeadb2c388677d70';
+String _$authActionHash() => r'2b5901ac60289fdd11837987eeaa7b179f1fee5d';
 
 abstract class _$AuthAction extends $Notifier<AsyncValue<void>> {
   AsyncValue<void> build();
