@@ -4,6 +4,8 @@ import 'package:caffchat/presentation/pages/auth/login.dart';
 import 'package:caffchat/presentation/pages/auth/register.dart';
 import 'package:caffchat/presentation/pages/chat/chatroom_page.dart';
 import 'package:caffchat/presentation/pages/home/homepage.dart';
+import 'package:caffchat/presentation/pages/settings/change_password_page.dart';
+import 'package:caffchat/presentation/pages/settings/edit_profile_page.dart';
 import 'package:caffchat/presentation/pages/splash/splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
@@ -96,6 +98,24 @@ class AppRouter {
                 conversationId: state
                     .pathParameters['conversationId']!,
               ),
+        ),
+
+        // Edit Profile
+        GoRoute(
+          path: RouteName.editProfile,
+          name: RouteName.editProfile,
+          builder: (context, state) =>
+              const EditProfilePage(),
+        ),
+
+        // Change Password
+        GoRoute(
+          path:
+              RouteName.changePassword,
+          name:
+              RouteName.changePassword,
+          builder: (context, state) =>
+              const ChangePasswordPage(),
         ),
       ],
     );

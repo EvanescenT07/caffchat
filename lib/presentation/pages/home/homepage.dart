@@ -1,12 +1,11 @@
+import 'package:caffchat/l10n/app_localizations.dart';
 import 'package:caffchat/core/design/caff_color.dart';
 import 'package:caffchat/core/design/caff_text.dart';
 import 'package:caffchat/core/design/font_config/caff_font_size.dart';
-import 'package:caffchat/core/router/app_route_name.dart';
 import 'package:caffchat/presentation/pages/chat/chat_list_page.dart';
-import 'package:caffchat/presentation/providers/auth/auth_action_provider.dart';
+import 'package:caffchat/presentation/pages/settings/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class Homepage
@@ -19,13 +18,16 @@ class Homepage
     WidgetRef ref,
   ) {
     final currentIndex = useState(0);
+    final l10n = AppLocalizations.of(
+      context,
+    );
+
     final pages = [
       const ChatListPage(),
       // Status tab placeholder
       Center(
         child: CaffText(
-          text:
-              'Status - Coming Soon!',
+          text: l10n.statusComingSoon,
           size: CaffFontSize.bodyLg,
           color: context
               .colors
@@ -33,11 +35,7 @@ class Homepage
         ),
       ),
       // Setting tab placeholder
-      _buildSettingsTab(
-        context,
-        ref,
-        context.colors,
-      ),
+      const SettingsPage(),
     ];
 
     return Scaffold(
@@ -71,7 +69,7 @@ class Homepage
                   .colors
                   .primaryContainer,
             ),
-            label: 'Chats',
+            label: l10n.chats,
           ),
           NavigationDestination(
             icon: Icon(
@@ -88,7 +86,7 @@ class Homepage
                   .colors
                   .primaryContainer,
             ),
-            label: 'Status',
+            label: l10n.status,
           ),
           NavigationDestination(
             icon: Icon(
@@ -103,57 +101,7 @@ class Homepage
                   .colors
                   .primaryContainer,
             ),
-            label: 'Settings',
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSettingsTab(
-    BuildContext context,
-    WidgetRef ref,
-    CaffColor colors,
-  ) {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          CaffText(
-            text:
-                'Settings — Coming soon',
-            size: CaffFontSize.bodyLg,
-            color:
-                colors.onSurfaceVariant,
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton.icon(
-            onPressed: () async {
-              await ref
-                  .read(
-                    authActionProvider
-                        .notifier,
-                  )
-                  .signOut();
-              if (context.mounted) {
-                context.go(
-                  RouteName.login,
-                );
-              }
-            },
-            icon: const Icon(
-              Icons.logout,
-            ),
-            label: const Text(
-              'Sign Out',
-            ),
-            style:
-                ElevatedButton.styleFrom(
-                  backgroundColor:
-                      colors.error,
-                  foregroundColor:
-                      colors.onError,
-                ),
+            label: l10n.settings,
           ),
         ],
       ),

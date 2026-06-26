@@ -32,4 +32,9 @@ abstract class AuthRepository {
   sendPasswordResetEmail({
     required String email,
   });
+
+  Future<Result<void>> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  });
 }

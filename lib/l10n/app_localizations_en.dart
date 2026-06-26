@@ -122,6 +122,122 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settings => 'Settings';
 
   @override
+  String get editProfile => 'Edit Profile';
+
+  @override
+  String get changePassword => 'Change Password';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get theme => 'Theme';
+
+  @override
+  String get about => 'About';
+
+  @override
+  String get account => 'Account';
+
+  @override
+  String get preferences => 'Preferences';
+
+  @override
+  String get dangerZone => 'Danger Zone';
+
+  @override
+  String get signOutConfirmTitle => 'Sign Out';
+
+  @override
+  String get signOutConfirmMessage => 'Are you sure you want to sign out?';
+
+  @override
+  String get confirm => 'Confirm';
+
+  @override
+  String get fullName => 'Full Name';
+
+  @override
+  String get saveChanges => 'Save Changes';
+
+  @override
+  String get changePhoto => 'Change Photo';
+
+  @override
+  String get profileUpdated => 'Profile updated successfully';
+
+  @override
+  String get profileUpdateFailed => 'Failed to update profile';
+
+  @override
+  String get discoverableByPhone => 'Discoverable by Phone Number';
+
+  @override
+  String get discoverableByPhoneSubtitle =>
+      'Allow other users to find you by phone number';
+
+  @override
+  String get currentPassword => 'Current Password';
+
+  @override
+  String get newPassword => 'New Password';
+
+  @override
+  String get confirmNewPassword => 'Confirm New Password';
+
+  @override
+  String get updatePassword => 'Update Password';
+
+  @override
+  String get passwordUpdated => 'Password updated successfully';
+
+  @override
+  String get passwordUpdateFailed => 'Failed to update password';
+
+  @override
+  String get currentPasswordRequired => 'Current password is required';
+
+  @override
+  String get newPasswordRequired => 'New password is required';
+
+  @override
+  String get newPasswordMinLength =>
+      'New password must be at least 6 characters';
+
+  @override
+  String get newPasswordMismatch => 'New passwords do not match';
+
+  @override
+  String get enterPhoneNumber => 'Enter phone number';
+
+  @override
+  String get searchByPhone => 'Search by Phone Number';
+
+  @override
+  String get noUserFoundWithPhone => 'No user found with this phone number';
+
+  @override
+  String get searchChats => 'Search chats...';
+
+  @override
+  String get noMatchingChats => 'No matching chats';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get indonesian => 'Indonesian';
+
+  @override
+  String get lightTheme => 'Light';
+
+  @override
+  String get darkTheme => 'Dark';
+
+  @override
+  String get systemTheme => 'System';
+
+  @override
   String get statusComingSoon => 'Status - Coming Soon!';
 
   @override

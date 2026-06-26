@@ -23,5 +23,10 @@ abstract class UserProfileRepository {
     String? photoUrl,
     String? bio,
     String? phoneNumber,
+    bool? discoverableByPhone,
   });
+
+  // Find User by phone number for new chat
+  Future<Result<UserProfile>>
+  findByPhoneNumber(String phoneNumber);
 }

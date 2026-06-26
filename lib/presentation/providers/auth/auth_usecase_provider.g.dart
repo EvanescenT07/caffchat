@@ -173,3 +173,45 @@ final class ForgotPasswordUseCaseProvider
 
 String _$forgotPasswordUseCaseHash() =>
     r'929b8a72e07755a4c2d6a1f18d82b781be5a9ceb';
+
+@ProviderFor(changePasswordUseCase)
+final changePasswordUseCaseProvider = ChangePasswordUseCaseProvider._();
+
+final class ChangePasswordUseCaseProvider
+    extends $FunctionalProvider<ChangePassword, ChangePassword, ChangePassword>
+    with $Provider<ChangePassword> {
+  ChangePasswordUseCaseProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'changePasswordUseCaseProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$changePasswordUseCaseHash();
+
+  @$internal
+  @override
+  $ProviderElement<ChangePassword> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  ChangePassword create(Ref ref) {
+    return changePasswordUseCase(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ChangePassword value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ChangePassword>(value),
+    );
+  }
+}
+
+String _$changePasswordUseCaseHash() =>
+    r'3cc93cbfab8e04565747fb38fadf34452d1f71da';

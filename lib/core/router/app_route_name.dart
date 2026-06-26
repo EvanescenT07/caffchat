@@ -22,4 +22,10 @@ class RouteName {
   // Chat
   static const String chatRoom =
       '/chat-room';
+
+  // Settings
+  static const String editProfile =
+      '/edit-profile';
+  static const String changePassword =
+      '/change-password';
 }

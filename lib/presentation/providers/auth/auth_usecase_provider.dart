@@ -1,3 +1,4 @@
+import 'package:caffchat/domain/usecase/auth/change_password.dart';
 import 'package:caffchat/domain/usecase/auth/forgot_password.dart';
 import 'package:caffchat/domain/usecase/auth/register.dart';
 import 'package:caffchat/domain/usecase/auth/sign_in.dart';
@@ -33,6 +34,15 @@ ForgotPassword forgotPasswordUseCase(
   Ref ref,
 ) {
   return ForgotPassword(
+    ref.watch(authRepositoryProvider),
+  );
+}
+
+@riverpod
+ChangePassword changePasswordUseCase(
+  Ref ref,
+) {
+  return ChangePassword(
     ref.watch(authRepositoryProvider),
   );
 }

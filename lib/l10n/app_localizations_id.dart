@@ -121,6 +121,122 @@ class AppLocalizationsId extends AppLocalizations {
   String get settings => 'Pengaturan';
 
   @override
+  String get editProfile => 'Edit Profil';
+
+  @override
+  String get changePassword => 'Ubah Kata Sandi';
+
+  @override
+  String get language => 'Bahasa';
+
+  @override
+  String get theme => 'Tema';
+
+  @override
+  String get about => 'Tentang';
+
+  @override
+  String get account => 'Akun';
+
+  @override
+  String get preferences => 'Preferensi';
+
+  @override
+  String get dangerZone => 'Zona Berbahaya';
+
+  @override
+  String get signOutConfirmTitle => 'Keluar';
+
+  @override
+  String get signOutConfirmMessage => 'Apakah Anda yakin ingin keluar?';
+
+  @override
+  String get confirm => 'Konfirmasi';
+
+  @override
+  String get fullName => 'Nama Lengkap';
+
+  @override
+  String get saveChanges => 'Simpan Perubahan';
+
+  @override
+  String get changePhoto => 'Ubah Foto';
+
+  @override
+  String get profileUpdated => 'Profil berhasil diperbarui';
+
+  @override
+  String get profileUpdateFailed => 'Gagal memperbarui profil';
+
+  @override
+  String get discoverableByPhone => 'Dapat Ditemukan via Nomor Telepon';
+
+  @override
+  String get discoverableByPhoneSubtitle =>
+      'Izinkan pengguna lain menemukan Anda melalui nomor telepon';
+
+  @override
+  String get currentPassword => 'Kata Sandi Saat Ini';
+
+  @override
+  String get newPassword => 'Kata Sandi Baru';
+
+  @override
+  String get confirmNewPassword => 'Konfirmasi Kata Sandi Baru';
+
+  @override
+  String get updatePassword => 'Perbarui Kata Sandi';
+
+  @override
+  String get passwordUpdated => 'Kata sandi berhasil diperbarui';
+
+  @override
+  String get passwordUpdateFailed => 'Gagal memperbarui kata sandi';
+
+  @override
+  String get currentPasswordRequired => 'Kata sandi saat ini wajib diisi';
+
+  @override
+  String get newPasswordRequired => 'Kata sandi baru wajib diisi';
+
+  @override
+  String get newPasswordMinLength => 'Kata sandi baru minimal 6 karakter';
+
+  @override
+  String get newPasswordMismatch => 'Kata sandi baru tidak cocok';
+
+  @override
+  String get enterPhoneNumber => 'Masukkan nomor telepon';
+
+  @override
+  String get searchByPhone => 'Cari berdasarkan Nomor Telepon';
+
+  @override
+  String get noUserFoundWithPhone =>
+      'Tidak ada pengguna dengan nomor telepon ini';
+
+  @override
+  String get searchChats => 'Cari obrolan...';
+
+  @override
+  String get noMatchingChats => 'Tidak ada obrolan yang cocok';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get indonesian => 'Indonesia';
+
+  @override
+  String get lightTheme => 'Terang';
+
+  @override
+  String get darkTheme => 'Gelap';
+
+  @override
+  String get systemTheme => 'Sistem';
+
+  @override
   String get statusComingSoon => 'Status - Segera Hadir!';
 
   @override

@@ -106,6 +106,7 @@ class FirestoreUserProfileRepository
     String? photoUrl,
     String? bio,
     String? phoneNumber,
+    bool? discoverableByPhone,
   }) async {
     try {
       final updates = <String, dynamic>{
@@ -126,6 +127,10 @@ class FirestoreUserProfileRepository
         updates['phoneNumber'] =
             phoneNumber;
       }
+      if (discoverableByPhone != null) {
+        updates['discoverableByPhone'] =
+            discoverableByPhone;
+      }
 
       await _usersCollection
           .doc(uid)
@@ -138,6 +143,50 @@ class FirestoreUserProfileRepository
       );
       return Result.failed(
         'Failed to update profile: ${e.message}',
+      );
+    }
+  }
+
+  @override
+  Future<Result<UserProfile>>
+  findByPhoneNumber(
+    String phoneNumber,
+  ) async {
+    try {
+      final query =
+          await _usersCollection
+              .where(
+                'phoneNumber',
+                isEqualTo: phoneNumber,
+              )
+              .where(
+                'discoverableByPhone',
+                isEqualTo: true,
+              )
+              .limit(1)
+              .get();
+
+      if (query.docs.isEmpty) {
+        return Result.failed(
+          'No user found with this phone number',
+        );
+      }
+
+      final model =
+          UserProfileModel.fromFirestore(
+            query.docs.first,
+          );
+
+      return Result.success(
+        model.toEntity(),
+      );
+    } on FirebaseException catch (e) {
+      AppLogger.error(
+        'Phone number lookup failed',
+        error: e,
+      );
+      return Result.failed(
+        'Search failed: ${e.message}',
       );
     }
   }

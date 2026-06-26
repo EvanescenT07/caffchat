@@ -20,7 +20,9 @@ class AuthAction extends _$AuthAction {
   ///
   /// Centralizes the result-to-state mapping to avoid
   /// duplicating the switch block across every action method.
-  void _handleResult(Result<dynamic> result) {
+  void _handleResult(
+    Result<dynamic> result,
+  ) {
     switch (result) {
       case Success():
         state = const AsyncData(null);
@@ -51,6 +53,11 @@ class AuthAction extends _$AuthAction {
           password: password,
           displayName: displayName,
         );
+    if (!ref.mounted) {
+      return Result.cancel(
+        'Provider disposed',
+      );
+    }
     _handleResult(result);
     // Sync to Firestore on successful registration
     if (result is Success<AuthUser>) {
@@ -95,6 +102,11 @@ class AuthAction extends _$AuthAction {
           email: email,
           password: password,
         );
+    if (!ref.mounted) {
+      return Result.cancel(
+        'Provider disposed',
+      );
+    }
     _handleResult(result);
 
     // Ensure Firestore profile exists (handles pre-migration users)
@@ -142,8 +154,25 @@ class AuthAction extends _$AuthAction {
     final result = await ref
         .read(signOutUseCaseProvider)
         .call();
+    if (!ref.mounted) return;
     _handleResult(result);
   }
+
+    Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+    state = const AsyncLoading();
+    final result = await ref
+        .read(changePasswordUseCaseProvider)
+        .call(
+          currentPassword: currentPassword,
+          newPassword: newPassword,
+        );
+    if (!ref.mounted) return;
+    _handleResult(result);
+  }
+
 
   Future<void> forgotPassword({
     required String email,
@@ -154,6 +183,7 @@ class AuthAction extends _$AuthAction {
           forgotPasswordUseCaseProvider,
         )
         .call(email: email);
+    if (!ref.mounted) return;
     _handleResult(result);
   }
 }
